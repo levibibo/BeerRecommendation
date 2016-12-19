@@ -90,9 +90,29 @@ namespace BeerRecommendation.Objects
       Assert.Equal(0, allBeers.Count);
     }
 
+    [Fact]
+    public void GetRating_GetAverageRatingForBeer_3()
+    {
+      //Arrange
+      Beer newBeer = new Beer("Alpha IPA", 6.8, 70.0);
+      User user1 = new User("Bob");
+      User user2 = new User("Fred");
+      newBeer.Save();
+      user1.Save();
+      user2.Save();
+
+      //Act
+      user1.RateBeer(newBeer.GetId(), 4);
+      user2.RateBeer(newBeer.GetId(), 2);
+
+      //Assert
+      Assert.Equal(3.00F, newBeer.GetRating());
+    }
+
     public void Dispose()
     {
       Beer.DeleteAll();
+      User.DeleteAll();
     }
   }
 }
