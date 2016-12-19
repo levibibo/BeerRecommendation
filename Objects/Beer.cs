@@ -45,6 +45,26 @@ namespace BeerRecommendation.Objects
 			return allBeers;
 		}
 
+		public static Beer Find(int id)
+		{
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+			SqlCommand cmd = new SqlCommand("SELECT name, abv, ibu FROM beers WHERE id = @Id;", conn);
+			cmd.Parameters.AddWithValue("@Id", id);
+			SqlDataReader rdr = cmd.ExecuteReader();
+			string name = null;
+			double abv = 0.0;
+			double ibu = 0.0;
+			while (rdr.Read())
+			{
+				name = rdr.GetString(0);
+				abv = rdr.GetDouble(1);
+				ibu = rdr.GetDouble(2);
+			}
+			if (rdr != null) rdr.Close();
+			return new Beer(name, abv, ibu, id);
+		}
+
 		public static void DeleteAll()
 		{
 			SqlConnection conn = DB.Connection();
@@ -54,7 +74,7 @@ namespace BeerRecommendation.Objects
 			if (conn != null) conn.Close();
 		}
 
-		//Other mentods
+		//Other methods
 		public void Save()
 		{
 			SqlConnection conn = DB.Connection();
@@ -83,9 +103,44 @@ namespace BeerRecommendation.Objects
 		}
 
 		//Overrides
+		public override bool Equals(Object otherBeer)
+		{
+			if (!(otherBeer is Beer))
+			{
+				return false;
+			}
+			else
+			{
+				Beer newBeer = (Beer) otherBeer;
+				bool idEquality = (_id == newBeer.GetId());
+				bool nameEquality = (_name == newBeer.GetName());
+				bool abvEquality = (_abv == newBeer.GetAbv());
+				bool ibuEquality = (_ibu == newBeer.GetIbu());
+				return (idEquality && nameEquality && abvEquality && ibuEquality);
+			}
+		}
 
+		public override int GetHashCode()
+		{
+			return _name.GetHashCode();
+		}
 
 		//Getters & Setters
-
+		public int GetId()
+		{
+			return _id;
+		}
+		public string GetName()
+		{
+			return _name;
+		}
+		public double GetAbv()
+		{
+			return _abv;
+		}
+		public double GetIbu()
+		{
+			return _ibu;
+		}
 	}
 }

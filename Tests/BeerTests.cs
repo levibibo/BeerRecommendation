@@ -27,6 +27,39 @@ namespace BeerRecommendation.Objects
       Assert.Equal(1, allBeers.Count);
     }
 
+    [Fact]
+    public void Find_GetSingleBeerFromDB_EquivalentBeer()
+    {
+      //Arrange
+      Beer beer1 = new Beer("Alpha IPA", 6.8, 70.0);
+      Beer beer2 = new Beer("Beta IPA", 6.8, 70.0);
+      beer1.Save();
+      beer2.Save();
+
+      //Act
+      Beer testBeer = Beer.Find(beer1.GetId());
+
+      //Assert
+      Assert.Equal(beer1, testBeer);
+    }
+
+    [Fact]
+    public void GetAll_ReturnAListOfAllBeers_ListOfBeers()
+    {
+      //Arrange
+      Beer beer1 = new Beer("Alpha IPA", 6.8, 70.0);
+      Beer beer2 = new Beer("Beta IPA", 6.8, 70.0);
+      beer1.Save();
+      beer2.Save();
+
+      //Act
+      List<Beer> testBeers = Beer.GetAll();
+      List<Beer> expectedBeers = new List<Beer> {beer1, beer2};
+
+      //Assert
+      Assert.Equal(expectedBeers, testBeers);
+    }
+
     public void Dispose()
     {
       Beer.DeleteAll();
