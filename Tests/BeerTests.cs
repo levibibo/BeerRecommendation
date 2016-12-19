@@ -60,6 +60,21 @@ namespace BeerRecommendation.Objects
       Assert.Equal(expectedBeers, testBeers);
     }
 
+    [Fact]
+    public void ChangeName_UpdateSingleBeerDetails_EquivalentBeer()
+    {
+      //Arrange
+      Beer expectedBeer = new Beer("Alpha IPA", 6.8, 70.0);
+
+      //Act
+      expectedBeer.Save();
+      expectedBeer.Update("Beta IPA", 7.0, 70.0);
+      Beer foundBeer = Beer.Find(expectedBeer.GetId());
+
+      //Assert
+      Assert.Equal(expectedBeer, foundBeer);
+    }
+
     public void Dispose()
     {
       Beer.DeleteAll();

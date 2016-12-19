@@ -102,6 +102,22 @@ namespace BeerRecommendation.Objects
 			}
 		}
 
+		public void Update(string name, double abv, double ibu)
+		{
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+			SqlCommand cmd = new SqlCommand("UPDATE beers SET name = @Name, abv = @Abv, ibu = @Ibu WHERE id = @Id;", conn);
+			cmd.Parameters.AddWithValue("@Name", name);
+			cmd.Parameters.AddWithValue("@Abv", abv);
+			cmd.Parameters.AddWithValue("@Ibu", ibu);
+			cmd.Parameters.AddWithValue("@Id", _id);
+			cmd.ExecuteNonQuery();
+			if (conn != null) conn.Close();
+			_name = name;
+			_abv = abv;
+			_ibu = ibu;
+		}
+
 		//Overrides
 		public override bool Equals(Object otherBeer)
 		{
