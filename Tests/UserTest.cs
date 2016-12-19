@@ -75,6 +75,21 @@ namespace BeerRecommendation.Objects
       Assert.Equal(expectedUser, foundUser);
     }
 
+    [Fact]
+    public void DeleteUser_RemoveSingleUserFromDB_0()
+    {
+      //Arrange
+      User newUser = new User("Robert");
+
+      //Act
+      newUser.Save();
+      User.DeleteUser(newUser.GetId());
+      List<User> allUsers = User.GetAll();
+
+      //Assert
+      Assert.Equal(0, allUsers.Count);
+    }
+
     public void Dispose()
     {
       User.DeleteAll();
