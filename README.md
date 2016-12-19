@@ -18,12 +18,15 @@ _Enter one or more beers you enjoy and get a list of similar beers to try._
 | Program will allow user to find all beers in the DB                            | {2 beers}          | {2 beers}          |
 | Program will be able to search for beers by name, abv, ibu, or location        | ibu: 70            | {list of beers}    |
 | Program will allow user to edit beer in DB                                     | Hefeweizen: IPA    | IPA                |
+| Program will allow user to remove beer from DB                                 | Hefeweizen: IPA    | IPA                |
 | Program will allow user to add new brewery to DB                               | Widmer             | 1                  |
 | Program will allow user to find a specific brewery in the DB                   | Widmer             | Widmer             |
 | Program will allow user to find all breweries in the DB                        | {2 breweries}      | {2 breweries}      |
 | Program will allow user to edit brewery in the DB                              | Widmer: Deschutes  | Deschutes          |
 | Program will allow user to add beer to brewery                                 | Widmer: Hefeweizen | Widmer: Hefeweizen |
 | Program will be able to find all beers made by a brewery                       | Widmer             | {list of beers}    |
+| Program will allow user to create new account                                  | Steve              | 1                  |
+| Program will allow user to remove account                                      | Steve              | 0                  |
 | Program will allow user to create new account                                  | Steve              | 1                  |
 | Program will allow user to rate a beer in the DB                               | 5                  | 5                  |
 | Program will allow user to find a new beer based on a generated recommendation | {beer 1}           | {similar beer 2}   |
