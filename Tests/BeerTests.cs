@@ -13,6 +13,20 @@ namespace BeerRecommendation.Objects
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=beer_recommendation;Integrated Security=SSPI;";
     }
 
+    [Fact]
+    public void Save_AddSingleBeerToDB_1()
+    {
+      //Arrange
+      Beer newBeer = new Beer("Alpha IPA", 6.8, 70.0);
+
+      //Act
+      newBeer.Save();
+      List<Beer> allBeers = Beer.GetAll();
+
+      //Assert
+      Assert.Equal(1, allBeers.Count);
+    }
+
     public void Dispose()
     {
       Beer.DeleteAll();
