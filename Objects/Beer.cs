@@ -65,6 +65,16 @@ namespace BeerRecommendation.Objects
 			return new Beer(name, abv, ibu, id);
 		}
 
+		public static void DeleteBeer(int id)
+		{
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+			SqlCommand cmd = new SqlCommand("DELETE FROM beers WHERE id = @Id;", conn);
+			cmd.Parameters.AddWithValue("@Id", id);
+			cmd.ExecuteNonQuery();
+			if (conn != null) conn.Close();
+		}
+
 		public static void DeleteAll()
 		{
 			SqlConnection conn = DB.Connection();

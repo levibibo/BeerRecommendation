@@ -75,6 +75,21 @@ namespace BeerRecommendation.Objects
       Assert.Equal(expectedBeer, foundBeer);
     }
 
+    [Fact]
+    public void DeleteBeer_RemoveSingleBeerFromDB_0()
+    {
+      //Arrange
+      Beer newBeer = new Beer("Alpha IPA", 6.8, 70.0);
+
+      //Act
+      newBeer.Save();
+      Beer.DeleteBeer(newBeer.GetId());
+      List<Beer> allBeers = Beer.GetAll();
+
+      //Assert
+      Assert.Equal(0, allBeers.Count);
+    }
+
     public void Dispose()
     {
       Beer.DeleteAll();
