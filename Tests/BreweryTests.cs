@@ -43,11 +43,31 @@ namespace BeerRecommendation.Objects
       Assert.Equal(testList, savedBreweries);
     }
 
-    // [Fact]
-    // public void GetAll_GetsAllObjectsFromTable()
-    // {
-    //
-    // }
+    [Fact]
+    public void GetAll_GetsAllObjectsFromTable()
+    {
+      //Arrange
+      Brewery testBrewery1 = new Brewery("Widmer", "Portland, OR");
+      Brewery testBrewery2 = new Brewery("Breakside", "Portland, OR");
+      testBrewery1.Save();
+      testBrewery2.Save();
+      List<Brewery> expectedList = new List<Brewery> { testBrewery1, testBrewery2 };
+      //Act
+      List<Brewery> results = Brewery.GetAll();
+      //Assert
+      Assert.Equal(expectedList, results);
+    }
 
+    [Fact]
+    public void Find_RetrievesTargetBrewery()
+    {
+      //Arrange
+      Brewery testBrewery = new Brewery("Breakside", "Portland, OR");
+      testBrewery.Save();
+      //Act
+      Brewery foundBrewery = Brewery.Find(testBrewery.GetId());
+      //Assert
+      Assert.Equal(testBrewery, foundBrewery);
+    }
   }
 }

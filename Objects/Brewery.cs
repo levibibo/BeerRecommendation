@@ -49,7 +49,34 @@ namespace BeerRecommendation.Objects
       if (rdr != null) conn.Close();
 
       if (conn != null) conn.Close();
+    }
 
+    public static Brewery Find(int targetId)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM breweries WHERE id = @targetId;", conn);
+      cmd.Parameters.AddWithValue("@targetId", targetId);
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      int newId = 0;
+      string newName = null;
+      string newLocation = null;
+
+      while(rdr.Read())
+      {
+        newId = rdr.GetInt32(0);
+        newName = rdr.GetString(1);
+        newLocation = rdr.GetString(2);
+      }
+      Brewery foundBrewery = new Brewery(newName, newLocation, newId);
+
+      if (rdr != null) rdr.Close();
+      if (conn != null) conn.Close();
+
+      return foundBrewery;
     }
 
     public static List<Brewery> GetAll()
