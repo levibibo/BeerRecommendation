@@ -52,6 +52,31 @@ namespace BeerRecommendation.Objects
 
     }
 
+    public static List<Brewery> GetAll()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM breweries;", conn);
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      var allBreweries = new List<Brewery>{};
+
+      while(rdr.Read())
+      {
+        int newId = rdr.GetInt32(0);
+        string newName = rdr.GetString(1);
+        string newLocation = rdr.GetString(2);
+        Brewery newBrewery = new Brewery(newName, newLocation, newId);
+        allBreweries.Add(newBrewery);
+      }
+      if (rdr != null) rdr.Close();
+
+      if (conn != null) conn.Close();
+
+      return allBreweries;
+    }
 ////Overrides
     public override bool Equals(System.Object otherObject)
     {
