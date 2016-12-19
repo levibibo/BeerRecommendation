@@ -112,6 +112,41 @@ namespace BeerRecommendation.Objects
 			_name = name;
 		}
 
+		public void RateBeer(int beerId, int rating)
+		{
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+			SqlCommand cmd = new SqlCommand("INSERT INTO favorites (beer_id, user_id, rating) VALUES (@BeerId, @UserId, @Rating);", conn);
+			cmd.Parameters.AddWithValue("@BeerId", beerId);
+			cmd.Parameters.AddWithValue("@UserId", _id);
+			cmd.Parameters.AddWithValue("@Rating", rating);
+			cmd.ExecuteNonQuery();
+			if (conn != null) conn.Close();
+		}
+
+		public Dictionary<int, List<object>> GetRated()
+		{
+			Dictionary<int, List<object>> ratedBeers = new Dictionary<int, List<object>>();
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+			SqlCommand cmd = new SqlCommand("SELECT beers.*, favorites.rating FROM favorites JOIN beers ON (favorites.beer_id = beers.id) WHERE favorites.user_id = @Id;", conn);
+			cmd.Parameters.AddWithValue("@Id", _id);
+			SqlDataReader rdr = cmd.ExecuteReader();
+			while (rdr.Read())
+			{
+				int beerId = rdr.GetInt32(0);
+				string beerName = rdr.GetString(1);
+				double beerAbv = rdr.GetDouble(2);
+				double beerIbu = rdr.GetDouble(3);
+				int rating = rdr.GetInt32(4);
+				Beer foundBeer = new Beer(beerName, beerAbv, beerIbu, beerId);
+				ratedBeers[foundBeer.GetId()] = new List<object> {foundBeer, rating};
+			}
+			if (rdr != null) rdr.Close();
+			if (conn != null) conn.Close();
+			return ratedBeers;
+		}
+
 		//Overrides
 		public override bool Equals(Object otherUser)
 		{

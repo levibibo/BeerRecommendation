@@ -90,8 +90,27 @@ namespace BeerRecommendation.Objects
       Assert.Equal(0, allUsers.Count);
     }
 
+    [Fact]
+    public void RateBeer_AddSingleBeerRating_1()
+    {
+      //Arrange
+      User newUser = new User("Bob");
+      Beer newBeer = new Beer("Alpha IPA", 6.8, 70.0);
+      newUser.Save();
+      newBeer.Save();
+
+      //Act
+      newUser.RateBeer(newBeer.GetId(), 5);
+      Dictionary<int, List<object>> ratedBeers = newUser.GetRated();
+      Beer testBeer = (Beer) ratedBeers[newBeer.GetId()][0];
+
+      //Assert
+      Assert.Equal(newBeer, testBeer);
+    }
+
     public void Dispose()
     {
+      Beer.DeleteAll();
       User.DeleteAll();
     }
   }
