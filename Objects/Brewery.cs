@@ -17,6 +17,42 @@ namespace BeerRecommendation.Objects
       _location = newLocation;
     }
 
+
+    public static void DeleteAll()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM breweries;", conn);
+      cmd.ExecuteNonQuery();
+
+      if (conn != null) conn.Close();
+    }
+
+    public void Save()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("INSERT INTO breweries (name, location) OUTPUT INSERTED.id VALUES (@Name, @Location);", conn);
+
+      cmd.Parameters.AddWithValue("@Name", this.GetName());
+      cmd.Parameters.AddWithValue("@Location", this.GetLocation());
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this._id = rdr.GetInt32(0);
+      }
+
+      if (rdr != null) conn.Close();
+
+      if (conn != null) conn.Close();
+
+    }
+
+////Overrides
     public override bool Equals(System.Object otherObject)
     {
       if (!(otherObject is Brewery))
@@ -37,23 +73,6 @@ namespace BeerRecommendation.Objects
     {
       return this.GetName().GetHashCode();
     }
-
-    public static void DeleteAll()
-    {
-      SqlConnection conn = DB.Connection();
-      conn.Open();
-
-      SqlCommand cmd = new SqlCommand("DELETE FROM breweries;", conn);
-      cmd.ExecuteNonQuery();
-
-      if (conn != null) conn.Close();
-    }
-
-
-
-
-
-
 
 ////Getters and Setters
     public void SetId(int newId)

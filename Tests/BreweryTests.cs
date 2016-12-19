@@ -13,6 +13,11 @@ namespace BeerRecommendation.Objects
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=beer_recommendation_test;Integrated Security=SSPI;";
     }
 
+    public void Dispose()
+    {
+      Brewery.DeleteAll();
+    }
+
     [Fact]
     public void Equals_ObjectsAreEqual_True()
     {
@@ -23,10 +28,26 @@ namespace BeerRecommendation.Objects
       Assert.Equal(testBrewery1, testBrewery2);
     }
 
-
-    public void Dispose()
+    [Fact]
+    public void Save_ObjectSavedToDatabase()
     {
-      Brewery.DeleteAll();
+      //Arrange
+      var testList = new List<Brewery>{};
+      Brewery newBrewery = new Brewery("Widmer", "Portland, OR");
+
+      //Act
+      newBrewery.Save();
+      testList.Add(newBrewery);
+      var savedBreweries = Brewery.GetAll();
+      //Assert
+      Assert.Equal(testList, savedBreweries);
     }
+
+    // [Fact]
+    // public void GetAll_GetsAllObjectsFromTable()
+    // {
+    //
+    // }
+
   }
 }
