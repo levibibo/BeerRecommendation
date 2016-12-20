@@ -4,8 +4,8 @@ body {
   background-repeat: no-repeat;
 }
 .page-header {
-  width: 95%;
-  margin: 2% 5% 6% 5%;
+  width: 100%;
+  margin: 2% 5% 6% 1%;
   border-radius: 20px;
   padding: 2% 5% 2% 5%;
   background-color: rgba(255, 255, 255, 0.5);
@@ -23,6 +23,7 @@ a:hover {
 div .form {
   padding: 5%;
   width: 60%;
+  margin-left: 1%;
   border-radius: 15px;
   background-color: rgba(255, 255, 255, 0.4);
 
@@ -32,6 +33,13 @@ h1 {
   font-size: 5em;
   font-weight: lighter;
   color: rgb(79, 56, 29);
+}
+h2 {
+  color: rgb(79, 56, 29);
+}
+h3 {
+  color: rgb(79, 56, 29);
+  font-size: 3em;
 }
 .nav-column a {
   background-color: rgba(255, 255, 255, 0.6);
@@ -53,7 +61,7 @@ label {
   margin-top: 10px;
   color: rgb(96, 65, 28);
 }
-.beer-form a {
+.form a {
   margin-left: 10px;
   color: white;
 }
