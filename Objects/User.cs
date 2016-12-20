@@ -59,7 +59,7 @@ namespace BeerRecommendation.Objects
 		{
 			SqlConnection conn = DB.Connection();
 			conn.Open();
-			SqlCommand cmd = new SqlCommand("DELETE FROM users WHERE id = @Id;", conn);
+			SqlCommand cmd = new SqlCommand("DELETE FROM favorites WHERE user_id = @Id; DELETE FROM users WHERE id = @Id;", conn);
 			cmd.Parameters.AddWithValue("@Id", id);
 			cmd.ExecuteNonQuery();
 			if (conn != null) conn.Close();
@@ -69,7 +69,7 @@ namespace BeerRecommendation.Objects
 		{
 			SqlConnection conn = DB.Connection();
 			conn.Open();
-			SqlCommand cmd = new SqlCommand("DELETE FROM users;", conn);
+			SqlCommand cmd = new SqlCommand("DELETE FROM favorites; DELETE FROM users;", conn);
 			cmd.ExecuteNonQuery();
 			if (conn != null) conn.Close();
 		}

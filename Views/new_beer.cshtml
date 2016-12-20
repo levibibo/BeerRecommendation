@@ -1,0 +1,18 @@
+@{
+	Layout = "Shared/_Layout.cshtml";
+}
+<form action="/beers/new/success" method="post">
+  <input class="form-control" type="text" name="name" placeholder="Beer Name" required>
+  <label for="abv">Alcohol By Volume:</label>
+  <input class="form-control" type="number" name="abv" step="any" min="0">
+  <label for="ibu">Bitterness:</label>
+  <input class="form-control" type="number" name="ibu" step="any" min="0">
+  <label for="Brewery">Brewery:</label>
+  <select class="form-control" name="brewery">
+    @foreach (var brewery in Model)
+    {
+      <option value="@brewery.GetId()">@brewery.GetName()</option>
+    }
+  </select>
+  <button class="btn btn-success" type="submit">Add Beer</button>
+</form>
