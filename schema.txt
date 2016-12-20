@@ -15,8 +15,8 @@ DROP TABLE IF EXISTS beers;
 CREATE TABLE beers (
   id INT IDENTITY(1,1) PRIMARY KEY,
   name VARCHAR(255),
-  abv DECIMAL,
-  ibu DECIMAL,
+  abv FLOAT,
+  ibu FLOAT,
 );
 
 -- ---
@@ -54,6 +54,7 @@ DROP TABLE IF EXISTS breweries;
 
 CREATE TABLE breweries (
   id INT IDENTITY(1,1) PRIMARY KEY,
+  name VARCHAR(255),
   location VARCHAR(255),
 );
 
