@@ -55,6 +55,23 @@ namespace BeerRecommendation.Objects
 			return new User(name, id);
 		}
 
+		public static bool UserExists(string name)
+		{
+			bool userExists = false;
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+			SqlCommand cmd = new SqlCommand("SELECT id FROM users WHERE name = @Name;", conn);
+			cmd.Parameters.AddWithValue("@Name", name);
+			SqlDataReader rdr = cmd.ExecuteReader();
+			while (rdr.Read())
+			{
+				userExists = true;
+			}
+			if (rdr != null) rdr.Close();
+			if (conn != null) conn.Close();
+			return userExists;
+		}
+
 		public static void DeleteUser(int id)
 		{
 			SqlConnection conn = DB.Connection();
