@@ -1,0 +1,59 @@
+body {
+  background-image: url(/Content/beer-wood.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.page-header {
+  width: 95%;
+  margin: 2% 5% 6% 5%;
+  border-radius: 20px;
+  padding: 2% 5% 2% 5%;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+a:link {
+  color: rgb(96, 65, 28);
+}
+a:visited {
+  color: rgb(96, 65, 28);
+}
+a:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: rgb(142, 103, 55);
+}
+div .form {
+  padding: 5%;
+  width: 60%;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.4);
+
+}
+h1 {
+  text-align: center;
+  font-size: 5em;
+  font-weight: lighter;
+  color: rgb(79, 56, 29);
+}
+.nav-column a {
+  background-color: rgba(255, 255, 255, 0.6);
+  width: 30%;
+  margin: 0% 2% 5% 15%;
+  border-radius: 10px;
+  padding: 2% 2% 2% 2%;
+  line-height: 6em;
+  font-weight: 600;
+  color: rgb(96, 65, 28);
+}
+.nav-column a:hover {
+  color: rgb(142, 103, 55);
+}
+.btn-warning {
+  background color: rgb(96, 65, 28);
+}
+label {
+  margin-top: 10px;
+  color: rgb(96, 65, 28);
+}
+.beer-form a {
+  margin-left: 10px;
+  color: white;
+}
