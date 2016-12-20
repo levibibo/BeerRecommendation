@@ -58,8 +58,8 @@ namespace BeerRecommendation.Objects
 			while (rdr.Read())
 			{
 				name = rdr.GetString(0);
-				abv = rdr.GetDouble(1);
-				ibu = rdr.GetDouble(2);
+				abv = (rdr.IsDBNull(1))? 0.0 : rdr.GetDouble(1);
+				ibu = (rdr.IsDBNull(2))? 0.0 : rdr.GetDouble(2);
 			}
 			if (rdr != null) rdr.Close();
 			return new Beer(name, abv, ibu, id);
