@@ -41,14 +41,21 @@ namespace BeerRecommendation
 			};
 			Get["/users/new"] = _ =>
 			{
-				return View["new_user.cshtml"];
+				return View["new_user.cshtml", false];
 			};
 			Post["/users/new/success"] = _ =>
 			{
 				string name = Request.Form["name"];
-				User newUser = new User(name);
-				newUser.Save();
-				return View["new_user_success.cshtml", newUser];
+				if (!(User.UserExists(name)))
+				{
+					User newUser = new User(name);
+					newUser.Save();
+					return View["new_user_success.cshtml", newUser];
+				}
+				else
+				{
+					return View["new_user.cshtml", true];
+				}
 			};
 
 			//Beer page
