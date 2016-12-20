@@ -16,6 +16,7 @@ namespace BeerRecommendation.Objects
     public void Dispose()
     {
       Brewery.DeleteAll();
+      Beer.DeleteAll();
     }
 
     [Fact]
@@ -69,5 +70,43 @@ namespace BeerRecommendation.Objects
       //Assert
       Assert.Equal(testBrewery, foundBrewery);
     }
+
+    [Fact]
+    public void AddBeer_SaveAssociationBetweenBeerAndBrewery()
+    {
+      //Arrange
+      Brewery testBrewery = new Brewery("Widmer", "Portland, OR");
+      testBrewery.Save();
+
+      Beer testBeer1 = new Beer("Alpha IPA", 6.8, 70.0);
+      testBeer1.Save();
+      List<Beer> testList = new List<Beer>{ testBeer1 };
+      //Act
+      testBrewery.AddBeer(testBeer1.GetId());
+
+      var result = testBrewery.GetBeers();
+      //Assert
+      Assert.Equal(testList, result);
+    }
+
+    [Fact]
+    public void GetBeers_GetAllBeersAssociatedWithBrewery()
+    {
+      //Arrange
+      Brewery testBrewery = new Brewery("Widmer", "Portland, OR");
+      testBrewery.Save();
+      Beer testBeer1 = new Beer("Alpha IPA", 6.8, 70.0);
+      Beer testBeer2 = new Beer("Beta IPA", 6.8, 70.0);
+      testBeer1.Save();
+      testBeer2.Save();
+      List<Beer> testList = new List<Beer>{ testBeer1 };
+      testBrewery.AddBeer(testBeer1.GetId());
+      //Act
+      var result = testBrewery.GetBeers();
+      //Assert
+      Assert.Equal(testList, result);
+    }
+
+
   }
 }

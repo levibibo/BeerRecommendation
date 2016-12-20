@@ -17,13 +17,65 @@ namespace BeerRecommendation.Objects
       _location = newLocation;
     }
 
+    public List<Beer> GetBeers()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT beers.* From breweries JOIN beers_breweries ON (breweries.id = beers_breweries.brewery_id) JOIN beers ON (beers_breweries.beer_id = beers.id) WHERE breweries.id = @BreweryId;", conn);
+
+      cmd.Parameters.AddWithValue("@BreweryId", this.GetId());
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      List<Beer> beers = new List<Beer>{};
+      while(rdr.Read())
+      {
+        int newId = rdr.GetInt32(0);
+        string newName = rdr.GetString(1);
+        double newAbv = (double) rdr.GetDouble(2);
+        double newIbu = (double) rdr.GetDouble(3);
+        Beer newBeer = new Beer(newName, newAbv, newIbu, newId);
+
+        beers.Add(newBeer);
+      }
+      if (rdr != null) rdr.Close();
+      if (conn != null) conn.Close();
+
+      return beers;
+    }
+
+    public void AddBeer(int beerId)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("INSERT INTO beers_breweries (beer_id, brewery_id) VALUES (@BeerId, @BreweryId);", conn);
+      cmd.Parameters.AddWithValue("@BeerId", beerId);
+      cmd.Parameters.AddWithValue("@BreweryId", this.GetId());
+
+      cmd.ExecuteNonQuery();
+      if (conn != null) conn.Close();
+    }
 
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("DELETE FROM breweries;", conn);
+      SqlCommand cmd = new SqlCommand("DELETE FROM beers_breweries; DELETE FROM breweries;", conn);
+      cmd.ExecuteNonQuery();
+
+      if (conn != null) conn.Close();
+    }
+
+    public static void Delete(int breweryId)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM beers_breweries WHERE brewery_id = @BreweryId; DELETE FROM breweries = @BreweryId;", conn);
+      cmd.Parameters.AddWithValue("@BreweryId", breweryId);
       cmd.ExecuteNonQuery();
 
       if (conn != null) conn.Close();
