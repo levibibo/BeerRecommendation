@@ -5,6 +5,12 @@
 <ul>
   @foreach (var beer in Model)
   {
-    <li><a href="/beers/@beer.GetId()">@beer.GetName()</a></li>
+    <li>
+    <a href="/beers/@beer.GetId()">@beer.GetName()</a> -
+    Brewery(ies):
+    @foreach (var brewery in beer.GetBreweries())
+    {
+      <a href="/breweries/@brewery.GetId()"> @brewery.GetName()</a></span>
+    }</li>
   }
 </ul>
