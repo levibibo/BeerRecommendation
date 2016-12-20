@@ -1,20 +1,22 @@
 @{
 	Layout = "Shared/_Layout.cshtml";
+	var beers = Model.GetBeers();
 }
 <div>
-  <h2>@Model.GetName()<h2>
-  <h3>This brewery has brews such as<h2>
-    @* @if (@Model["beers"].Count > 0)
+  <h2>@Model.GetName()</h2>
+  <h3>This brewery has brews such as</h2>
+    @if (beers.Count > 0)
     {
       <ul>
-      @foreach beer in @Model["beers"]
+      @foreach(var beer in beers)
       {
-        <li>@beer.GetName()</li>
+        <li><a href="/beers/@beer.GetId()">@beer.GetName()</a></li>
       }
+			</ul>
     }
     else
     {
-      <h3>No beers are in the database for this brewery yet!<h3>
-    } *@
+      <h3>No beers are in the database for this brewery yet!</h3>
+    }
     <a class="btn btn-warning" href="/">Home</a>
 </div>
