@@ -14,6 +14,25 @@ namespace BeerRecommendation
 				return View["index.cshtml"];
 			};
 
+			//Test page
+			Get["/test"] = _ =>
+			{
+				List<Beer> allBeers = Beer.GetAll();
+				List<User> allUsers = User.GetAll();
+				Dictionary<string, object> Model = new Dictionary<string, object>();
+				Model["beers"] = allBeers;
+				Model["users"] = allUsers;
+				return View["algorithm_test_form.cshtml", Model];
+			};
+			Post["/test/result"] = _ =>
+			{
+				int userId = int.Parse(Request.Form["user-id"]);
+				int beerId = int.Parse(Request.Form["beer-id"]);
+				User foundUser = User.Find(userId);
+				List<Beer> recommendedBeers = foundUser.GetRecommendations(beerId);
+				return View["algorithm_test_result.cshtml", recommendedBeers];
+			};
+
 			//User page
 			Get["/users/{id}"] = parameters =>
 			{

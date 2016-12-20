@@ -1,0 +1,10 @@
+@{
+	Layout = "Shared/_Layout.cshtml";
+}
+<h2>Recommended Beers</h2>
+<ul>
+  @foreach (var beer in Model)
+  {
+    <li><a href="/beers/@beer.GetId()">@beer.GetName()</a></li>
+  }
+</ul>
