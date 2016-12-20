@@ -33,8 +33,8 @@ namespace BeerRecommendation.Objects
       {
         int newId = rdr.GetInt32(0);
         string newName = rdr.GetString(1);
-        double newAbv = (double) rdr.GetDouble(2);
-        double newIbu = (double) rdr.GetDouble(3);
+        double newAbv = (rdr.IsDBNull(2))? 0.0 : rdr.GetDouble(2);
+        double newIbu = (rdr.IsDBNull(3))? 0.0 : rdr.GetDouble(3);
         Beer newBeer = new Beer(newName, newAbv, newIbu, newId);
 
         beers.Add(newBeer);
