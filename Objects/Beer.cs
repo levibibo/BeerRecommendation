@@ -128,6 +128,25 @@ namespace BeerRecommendation.Objects
 			_ibu = ibu;
 		}
 
+		public float GetRating()
+		{
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+			SqlCommand cmd = new SqlCommand("SELECT rating FROM favorites WHERE beer_id = @Id;", conn);
+			cmd.Parameters.AddWithValue("@Id", _id);
+			SqlDataReader rdr = cmd.ExecuteReader();
+			int totalRating = 0;
+			int counter = 0;
+			while (rdr.Read())
+			{
+				counter++;
+				totalRating += rdr.GetInt32(0);
+			}
+			if (rdr != null) rdr.Close();
+			if (conn != null) conn.Close();
+			return (float) Math.Round(((double) (totalRating/counter)), 2);
+		}
+
 		//Overrides
 		public override bool Equals(Object otherBeer)
 		{
