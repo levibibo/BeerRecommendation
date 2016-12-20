@@ -34,8 +34,8 @@ namespace BeerRecommendation.Objects
 			{
 				int id = rdr.GetInt32(0);
 				string name = rdr.GetString(1);
-				double abv = rdr.GetDouble(2);
-				double ibu = rdr.GetDouble(3);
+				double abv = (rdr.IsDBNull(2))? 0.0 : rdr.GetDouble(2);
+				double ibu = (rdr.IsDBNull(3))? 0.0 : rdr.GetDouble(3);
 
 				Beer newBeer = new Beer(name, abv, ibu, id);
 				allBeers.Add(newBeer);
@@ -102,14 +102,8 @@ namespace BeerRecommendation.Objects
 			{
 				_id = rdr.GetInt32(0);
 			}
-			if (rdr != null)
-			{
-				rdr.Close();
-			}
-			if (conn != null)
-			{
-				conn.Close();
-			}
+			if (rdr != null) rdr.Close();
+			if (conn != null) conn.Close();
 		}
 
 		public void Update(string name, double abv, double ibu)

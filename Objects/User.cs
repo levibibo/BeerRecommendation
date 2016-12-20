@@ -136,8 +136,8 @@ namespace BeerRecommendation.Objects
 			{
 				int beerId = rdr.GetInt32(0);
 				string beerName = rdr.GetString(1);
-				double beerAbv = rdr.GetDouble(2);
-				double beerIbu = rdr.GetDouble(3);
+				double beerAbv = (rdr.IsDBNull(2))? 0.0 : rdr.GetDouble(2);
+				double beerIbu = (rdr.IsDBNull(3))? 0.0 : rdr.GetDouble(3);
 				int rating = rdr.GetInt32(4);
 				Beer foundBeer = new Beer(beerName, beerAbv, beerIbu, beerId);
 				ratedBeers[foundBeer.GetId()] = new List<object> {foundBeer, rating};
@@ -145,6 +145,60 @@ namespace BeerRecommendation.Objects
 			if (rdr != null) rdr.Close();
 			if (conn != null) conn.Close();
 			return ratedBeers;
+		}
+
+		public List<Beer> GetRecommendations(int baseBeerId, int listSize = 5, double ibuModifierIncrement = 2.0, double abvModifierIncrement = 0.1)
+		{
+			List<Beer> chosenBeers = new List<Beer>{};
+			Beer baseBeer = Beer.Find(baseBeerId);
+			double abvModifier = 0.0;
+			double ibuModifier = 0.0;
+
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+			while (chosenBeers.Count < listSize)
+			{
+				double baseAbv = baseBeer.GetAbv();
+				double baseIbu = baseBeer.GetIbu();
+				double abvNegative = baseAbv - abvModifier;
+				double abvPositive = baseAbv + abvModifier;
+				double ibuNegative = baseIbu - ibuModifier;
+				double ibuPositive = baseIbu + ibuModifier;
+
+				//Get all beers within range for ibu and abv, and where the beer isn't given and hasn't been rated by the user
+				SqlCommand cmd = new SqlCommand("SELECT beers.* FROM beers LEFT JOIN favorites ON (beers.id = favorites.beer_id) WHERE (beers.abv BETWEEN @AbvNegative AND @AbvPositive) AND (beers.ibu BETWEEN @IbuNegative AND @IbuPositive) AND (beers.id != @BeerId) ORDER BY favorites.rating DESC, beers.name ASC;", conn);
+				cmd.Parameters.AddWithValue("@AbvNegative", abvNegative);
+				cmd.Parameters.AddWithValue("@AbvPositive", abvPositive);
+				cmd.Parameters.AddWithValue("@IbuNegative", ibuNegative);
+				cmd.Parameters.AddWithValue("@IbuPositive", ibuPositive);
+				cmd.Parameters.AddWithValue("@BeerId", baseBeer.GetId());
+				cmd.Parameters.AddWithValue("@UserId", _id);
+				SqlDataReader rdr = cmd.ExecuteReader();
+				while (rdr.Read())
+				{
+					int beerId = rdr.GetInt32(0);
+					string beerName = rdr.GetString(1);
+					double beerAbv = (rdr.IsDBNull(2))? 0.0 : rdr.GetDouble(2);
+					double beerIbu = (rdr.IsDBNull(3))? 0.0 : rdr.GetDouble(3);
+					Beer foundBeer = new Beer(beerName, beerAbv, beerIbu, beerId);
+					if (!(chosenBeers.Contains(foundBeer)))
+					{
+						chosenBeers.Add(foundBeer);
+					}
+				}
+				if (rdr != null) rdr.Close();
+
+				abvModifier += abvModifierIncrement;
+				ibuModifier += ibuModifierIncrement;
+			}
+
+			if (chosenBeers.Count > listSize)
+			{
+				chosenBeers.RemoveRange(listSize, (chosenBeers.Count - listSize));
+			}
+
+			if (conn != null) conn.Close();
+			return chosenBeers;
 		}
 
 		//Overrides
