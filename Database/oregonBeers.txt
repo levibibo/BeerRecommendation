@@ -8,7 +8,7 @@
 10 Barrel;Hop Project #2 India Pale Ale ;6.8;74;-1;Bend, Oregon, USA
 10 Barrel;Hop Project #37 Brown India Pale Ale ;6.95;72;-1;Bend, Oregon, USA
 10 Barrel;Hop Project #91 Black India Pale Ale ;7.3;94;-1;Bend, Oregon, USA
-10 Barrel;Hop Rye’it;6.5;-1;-1;Bend, Oregon, USA
+10 Barrel;Hop Rye'it;6.5;-1;-1;Bend, Oregon, USA
 10 Barrel;ISA;5.5;-1;-1;Bend, Oregon, USA
 10 Barrel;OG Wheat India Pale Ale ;6.5;-1;-1;Bend, Oregon, USA
 10 Barrel;Oregon Brown Ale ;6.7;68;-1;Bend, Oregon, USA
@@ -90,7 +90,7 @@ Beer Valley;Leafer Madness Imperial Pale Ale;9;100;-1;Ontario, Oregon, USA
 Beer Valley;Owyhee Amber Ale;5.5;20;-1;Ontario, Oregon, USA
 Beer Valley;Pigskin Pale Ale;6;45;-1;Ontario, Oregon, USA
 Beer Valley;Rosebud India Pale Ale ;6.5;-1;-1;Ontario, Oregon, USA
-Bend Barcelona Amber Ale;-1;-1;-1;Bend, Oregon, USA
+Bend;Barcelona Amber Ale;-1;-1;-1;Bend, Oregon, USA
 Bend;Big Eddy Bitter ;-1;-1;-1;Bend, Oregon, USA
 Bend;Doppelbock ;-1;-1;-1;Bend, Oregon, USA
 Bend;Elk Lake IPA;-1;-1;-1;Bend, Oregon, USA
@@ -142,7 +142,7 @@ Brannon's;Butteridge ESB;5;32.1;-1;Beaverton, Oregon, USA
 Brannon's;Deputation Imperial Red Ale;8;50.9;-1;Beaverton, Oregon, USA
 Brannon's;Heliograph IPA;7.1;99;-1;Beaverton, Oregon, USA
 Brannon's;Vernepator NW Pale Ale;5.8;47.4;-1;Beaverton, Oregon, USA
-Brannon’s;Cavorite Golden Ale;5.6;27.1;-1;Beaverton, Oregon, USA
+Brannon's;Cavorite Golden Ale;5.6;27.1;-1;Beaverton, Oregon, USA
 Breakside;Aztec;9.4;-1;-1;Portland, Oregon, USA
 Breakside;Big Country Winter Ale ;7.8;36;-1;Portland, Oregon, USA
 Breakside;Bourbon Woody ;10;-1;-1;Portland, Oregon, USA
@@ -182,7 +182,7 @@ BridgePort;Smooth Ryed ;6.3;55;-1;Portland, Oregon, USA
 BridgePort;Summer Squeeze Bright Ale ;4.5;19;-1;Portland, Oregon, USA
 BridgePort;Supris;6;17;-1;Portland, Oregon, USA
 BridgePort;Trilogy #2 - Aussie Salute IPA ;5.8;55;-1;Portland, Oregon, USA
-BridgePort;Trilogy #3 - Brewers’ Class ;5;30;-1;Portland, Oregon, USA
+BridgePort;Trilogy #3 - Brewers' Class ;5;30;-1;Portland, Oregon, USA
 Buoy;Cream Ale;5.7;19;-1;Astoria, Oregon, USA
 Buoy;Czech Pils;6.2;35;-1;Astoria, Oregon, USA
 Buoy;Doppelbock;7.7;28;-1;Astoria, Oregon, USA
@@ -302,7 +302,7 @@ Cyderworks;Oregon Dry Sparkling Hard Cider;6.5;-1;-1;Portland, Oregon, USA
 De Garde;Beaucoup Desay ;8.9;-1;-1;Tillamook, Oregon, USA
 De Garde;Biere de Garde (Port Barrel) ;10;-1;-1;Tillamook, Oregon, USA
 De Garde;Connak Ambre ;8.2;-1;-1;Tillamook, Oregon, USA
-De Garde;Desay a l’Orange ;6.4;25;-1;Tillamook, Oregon, USA
+De Garde;Desay a l'Orange ;6.4;25;-1;Tillamook, Oregon, USA
 De Garde;Fleur Desay;6.3;-1;-1;Tillamook, Oregon, USA
 De Garde;Hose ;4;-1;-1;Tillamook, Oregon, USA
 De Garde;Lee Noir;8.6;-1;-1;Tillamook, Oregon, USA
@@ -691,7 +691,7 @@ Liberator;Train Wreck Triple ;11;-1;-1;Troutdale, Oregon, USA
 Logsdon;Aberrant ;8;-1;-1;Hood River, Oregon, USA
 Logsdon;Cerasus ;8.5;-1;-1;Hood River, Oregon, USA
 Logsdon;Far West Vlaming ;6.5;-1;-1;Hood River, Oregon, USA
-Logsdon;Peche ’n Brett;10;-1;-1;Hood River, Oregon, USA
+Logsdon;Peche 'n Brett;10;-1;-1;Hood River, Oregon, USA
 Logsdon;Seizoen;7.5;-1;-1;Hood River, Oregon, USA
 Logsdon;Seizoen Bretta;8;-1;-1;Hood River, Oregon, USA
 Logsdon;Straffe Drieling ;8.8;38;-1;Hood River, Oregon, USA
@@ -931,7 +931,6 @@ Oregon Trail;IPA;-1;-1;-1;Corvallis, Oregon, USA
 Pale Horse;Hillbilly Blonde;4.4;-1;-1;Salem, Oregon, USA
 Pale Horse;Hopyard Dog IPA;7.2;-1;-1;Salem, Oregon, USA
 Pale Horse;Mystic Wolf Amber;6;-1;-1;Salem, Oregon, USA
-Panty Dropper Ale;5.8;83;-1;Bend, Oregon, USA
 Pelican;Anglers Amber Ale ;6.7;35;-1;Pacific City, Oregon, USA
 Pelican;Ankle-Buster Ale ;5.4;35;-1;Pacific City, Oregon, USA
 Pelican;Bad Santa ;6.7;70;-1;Pacific City, Oregon, USA
@@ -969,8 +968,8 @@ pFriem;Mosaic Pale;6.3;-1;-1;Hood River, Oregon, USA
 Phat Matt's;Golden Ale;6;24;-1;Redmond, Oregon, USA
 Phat Matt's;IPA;7;64;-1;Redmond, Oregon, USA
 Phat Matt's;Red;6.5;50;-1;Redmond, Oregon, USA
-Phat Matt’s;Kolsch;4.7;-1;-1;Redmond, Oregon, USA
-Phat Matt’s;White IPA Ale;5;60;-1;Redmond, Oregon, USA
+Phat Matt's;Kolsch;4.7;-1;-1;Redmond, Oregon, USA
+Phat Matt's;White IPA Ale;5;60;-1;Redmond, Oregon, USA
 Philadelphias;Ben Franklin Brown;5.5;-1;-1;Portland, Oregon, USA
 Philadelphias;Betsy Ross Golden Ale;4.5;-1;-1;Portland, Oregon, USA
 Philadelphias;Flemish Brown ;5.5;-1;-1;Portland, Oregon, USA
@@ -1112,6 +1111,7 @@ Silver Moon;Hop KNOB IPA;5.7;40;-1;Bend, Oregon, USA
 Silver Moon;HOPpopatamus ;6.7;-1;-1;Bend, Oregon, USA
 Silver Moon;Hoptagon ;9;99;-1;Bend, Oregon, USA
 Silver Moon;Hounds Tooth Amber;4.4;10;-1;Bend, Oregon, USA
+Silver Moon;Panty Dropper Ale;5.8;83;-1;Bend, Oregon, USA
 Silver Moon;Sundance Tripple;-1;-1;-1;Bend, Oregon, USA
 Silver Moon;Voodoo Dog;5.5;47;-1;Bend, Oregon, USA
 Silver Moon;Winters Bock;-1;-1;-1;Bend, Oregon, USA
@@ -1131,7 +1131,7 @@ Steelhead;Barracuda Blonde;-1;-1;-1;Eugene, Oregon, USA
 Steelhead;Bombay Bomber IPA;-1;-1;-1;Eugene, Oregon, USA
 Steelhead;Bulldog Pale Ale;5.8;37;-1;Eugene, Oregon, USA
 Steelhead;Raging Rhino Red;5.4;-1;-1;Eugene, Oregon, USA
-Stickmen;Brown Dn’Unda;6.8;51;-1;Lake Oswego, Oregon, USA
+Stickmen;Brown Dn'Unda;6.8;51;-1;Lake Oswego, Oregon, USA
 Stickmen;F-Bomb;7;75;-1;Lake Oswego, Oregon, USA
 Stickmen;One Rye Bitch ;10.6;98;-1;Lake Oswego, Oregon, USA
 Stickmen;One Ton Trolley;9.1;123;-1;Lake Oswego, Oregon, USA
@@ -1159,7 +1159,7 @@ The Commons;Urban Farmhouse Ale;5.5;30;-1;Portland, Oregon, USA
 Three Creeks;8 Second IBA;6.6;85;-1;Sisters, Oregon, USA
 Three Creeks;Anvil Amber;5;32;-1;Sisters, Oregon, USA
 Three Creeks;Firestorm Red;5.8;65;-1;Sisters, Oregon, USA
-Three Creeks;Goldminer’s Daughter Pre-prohibition Common Ale ;5.5;28;-1;Sisters, Oregon, USA
+Three Creeks;Goldminer's Daughter Pre-prohibition Common Ale ;5.5;28;-1;Sisters, Oregon, USA
 Three Creeks;Hoodoo Voodoo IPA;6.2;82;-1;Sisters, Oregon, USA
 Three Creeks;Knotty Blonde;4;18;-1;Sisters, Oregon, USA
 Three Creeks;Old Prospector Pale;5.3;48;-1;Sisters, Oregon, USA
