@@ -1,0 +1,20 @@
+@{
+	Layout = "Shared/_Layout.cshtml";
+}
+<div>
+  <h2>@Model.GetName()<h2>
+  <h3>This brewery has brews such as<h2>
+    @* @if (@Model["beers"].Count > 0)
+    {
+      <ul>
+      @foreach beer in @Model["beers"]
+      {
+        <li>@beer.GetName()</li>
+      }
+    }
+    else
+    {
+      <h3>No beers are in the database for this brewery yet!<h3>
+    } *@
+    <a class="btn btn-warning" href="/">Home</a>
+</div>

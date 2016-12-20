@@ -1,13 +1,12 @@
 @{
 	Layout = "Shared/_Layout.cshtml";
 }
-<div class="row">
-  <div class="well">
-    @foreach (var beer in Model)
-    {
-      <div class="row">
-        <p><a href="/beer/@beer.GetId()">@beer.GetName()</a></p>
-      </div>
-    }
-  </div>
+<div class="form">
+	<h3>Here is your list of breweries</h3>
+  @foreach (var beer in Model)
+  {
+    <div class="row">
+      <p><a href="/beers/@beer.GetId()">@beer.GetName()</a></p>
+    </div>
+  }
 </div>
