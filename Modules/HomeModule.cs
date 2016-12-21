@@ -32,7 +32,6 @@ namespace BeerRecommendation
 				}
 				else
 				{
-
 					bool userExists = false;
 					return View["new_user.cshtml", userExists];
 				}
