@@ -74,7 +74,7 @@ namespace BeerRecommendation
 				return View["login.cshtml"].WithCookie(idNumber);
 			};
 
-			//Test page
+			//Recommendation page
 			Get["/recommend"] = _ =>
 			{
 				List<Beer> allBeers = Beer.GetAll();
@@ -138,17 +138,15 @@ namespace BeerRecommendation
 				List<Beer> allBeers = Beer.GetAll();
 				return View["beers.cshtml", allBeers];
 			};
-
 			Get["/beers/search"] = _ =>
 			{
 				return View["search_beers.cshtml"];
 			};
-
 			Post["/beers/search"] = _ =>
 			{
 				string searchBy = Request.Form["search-type"];
 				List<Beer> foundBeers = new List<Beer> {};
-				
+
 				if (searchBy == "abv" || searchBy == "ibu")
 				{
 					double searchInput = Request.Form["search-input"];
