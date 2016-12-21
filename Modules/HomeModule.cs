@@ -20,7 +20,6 @@ namespace BeerRecommendation
 			{
 				return View["login.cshtml"];
 			};
-
 			Post["/login"] = _ =>
 			{
 				string userName = Request.Form["user-name"];
@@ -35,22 +34,36 @@ namespace BeerRecommendation
 					return View["new_user.cshtml"];
 				}
 			};
+
 			//Test page
-			Get["/test"] = _ =>
+			Get["/recommend"] = _ =>
 			{
 				List<Beer> allBeers = Beer.GetAll();
 				List<User> allUsers = User.GetAll();
 				Dictionary<string, object> Model = new Dictionary<string, object>();
 				Model["beers"] = allBeers;
 				Model["users"] = allUsers;
-				return View["algorithm_test_form.cshtml", Model];
+				return View["recommend_form.cshtml", Model];
 			};
-			Post["/test/result"] = _ =>
+			Post["/recommend/results"] = _ =>
 			{
-				User guest = new User("Guest");
-				int beerId = int.Parse(Request.Form["beer-id"]);
-				List<Beer> recommendedBeers = guest.GetRecommendations(beerId);
-				return View["algorithm_test_result.cshtml", recommendedBeers];
+				List<Beer> recommendedBeers = new List<Beer>{};
+				if (!(Request.Cookies.ContainsKey("userId")) || (Request.Cookies["userId"] == "0"))
+				{
+					User guest = new User("Guest");
+					int beerId = int.Parse(Request.Form["beer-id"]);
+					int listSize = int.Parse(Request.Form["list-size"]);
+					recommendedBeers = guest.GetRecommendations(beerId, listSize);
+				}
+				else
+				{
+					int userId = int.Parse(Request.Cookies["userId"]);
+					User foundUser = User.Find(userId);
+					int beerId = int.Parse(Request.Form["beer-id"]);
+					int listSize = int.Parse(Request.Form["list-size"]);
+					recommendedBeers = foundUser.GetRecommendations(beerId, listSize);
+				}
+				return View["recommend_result.cshtml", recommendedBeers];
 			};
 
 			//User page
@@ -123,7 +136,7 @@ namespace BeerRecommendation
 				newBrewery.Save();
 				return View["new_brewery_success.cshtml", newBrewery];
 			};
-			Get["/brewery/{id}"] = parameters =>
+			Get["/breweries/{id}"] = parameters =>
 			{
 				Brewery foundBrewery = Brewery.Find(parameters.id);
 				return View["brewery.cshtml", foundBrewery];
