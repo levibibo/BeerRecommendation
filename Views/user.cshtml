@@ -2,15 +2,16 @@
 	Layout = "Shared/_Layout.cshtml";
 	var ratedBeers = @Model.GetRated();
 }
-<div>
+<div class="form">
 	<h2>@Model.GetName()</h2>
 	@if (ratedBeers.Keys.Count > 0)
 	{
 		<h3>Rated beers</h3>
-		@foreach (var beerRating in ratedBeers)
+		<ul>
+		@foreach (var beerId in ratedBeers.Keys)
 		{
-			<p>@beerRating[0].GetName() - Rating: @beerRating[1] out of 5</p>
+			<li><h4>@ratedBeers[beerId][0].GetName() - Rating: @ratedBeers[beerId][1] out of 5</h4></li>
 		}
+		</ul>
 	}
-	<a class="btn btn-warning" href="/">Home</a>
 </div>

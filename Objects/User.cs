@@ -134,7 +134,7 @@ namespace BeerRecommendation.Objects
 		{
 			SqlConnection conn = DB.Connection();
 			conn.Open();
-			SqlCommand cmd = new SqlCommand("INSERT INTO favorites (beer_id, user_id, rating) VALUES (@BeerId, @UserId, @Rating);", conn);
+			SqlCommand cmd = new SqlCommand("IF ((SELECT COUNT(*) FROM favorites WHERE user_id = @UserId AND beer_id = @BeerId) > 0) UPDATE favorites SET rating = @Rating WHERE user_id = @UserId AND beer_id = @BeerId ELSE INSERT INTO favorites (beer_id, user_id, rating) VALUES (@BeerId, @UserId, @Rating);", conn);
 			cmd.Parameters.AddWithValue("@BeerId", beerId);
 			cmd.Parameters.AddWithValue("@UserId", _id);
 			cmd.Parameters.AddWithValue("@Rating", rating);

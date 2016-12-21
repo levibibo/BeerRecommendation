@@ -2,7 +2,7 @@
 	Layout = "Shared/_Layout.cshtml";
 	var beers = Model.GetBeers();
 }
-<div>
+<div class="form">
   <h2>@Model.GetName()</h2>
   <h3>This brewery has brews such as</h2>
     @if (beers.Count > 0)
@@ -18,5 +18,4 @@
     {
       <h3>No beers are in the database for this brewery yet!</h3>
     }
-    <a class="btn btn-warning" href="/">Home</a>
 </div>

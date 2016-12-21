@@ -1,11 +1,52 @@
 @{
 	Layout = "Shared/_Layout.cshtml";
+	double abv = @Model.GetAbv();
+	double ibu = @Model.GetIbu();
+	float rating = @Model.GetRating();
 }
-<div>
+<div class="form">
   <h2>@Model.GetName()</h2>
+	<h3>Brewery(ies):</h3>
+	@foreach (var brewery in @Model.GetBreweries())
+	{
+		<h4><a href="/breweries/@brewery.GetId()">@brewery.GetName()</a></h4>
+	}
+	@if (abv == 0.0)
+	{
+		<h4>Alcohol by volume: Unknown</h4>
+	}
+	else
+	{
+		<h4>Alcohol by volume: @abv%</h4>
+	}
+	@if (ibu == 0.0)
+	{
+		<h4>Bitterness: Unknown</h4>
+	}
+	else
+	{
+		<h4>Bitterness: @ibu IBU</h4>
+	}
+	@if (rating > 0.0)
+	{
+		<h4>Average user rating: @rating out of 5</h4>
+	}
+	@if ((Request.Cookies.ContainsKey("userId")) && (int.Parse(Request.Cookies["userId"]) > 0))
+	{
+		<h4>Rate this beer:</h4>
+		<form action="/beers/@Model.GetId()" method="post">
+			<select class="form-control" name="beerRating" required>
+				@for (int newRating = 1; newRating <= 5; newRating++)
+				{
+					<option value="@newRating">@newRating.ToString()</option>
+				}
+			</select>
+			<br>
+			<button class="btn btn-warning" type="submit">Rate</button>
+		</form>
+	}
   <!-- <form action="/recommend/results" method="get">
   	<input type="hidden" name="beer-id" value="@Model.GetId()">
 	<button class="btn btn-warning" type="submit">Get similar beers</button>
   </form> -->
-  <a class="btn btn-warning" href="/">Home</a>
 </div>
