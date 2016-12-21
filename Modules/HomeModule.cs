@@ -108,6 +108,20 @@ namespace BeerRecommendation
 				List<Brewery> allBreweries = Brewery.GetAll();
 				return View["new_beer.cshtml", allBreweries];
 			};
+
+			Get["/beers/search"] = _ =>
+			{
+				return View["search_beers.cshtml"];
+			};
+
+			Post["/beers/search"] = _ =>
+			{
+				string searchBy = Request.Form["search-type"];
+				string searchInput = Request.Form["search-input"];
+				var foundBeers = Beer.Search(searchBy, searchInput);
+				return View["search_beers.cshtml", foundBeers];
+			};
+
 			Post["/beers/new/success"] = _ =>
 			{
 				string name = Request.Form["name"];
