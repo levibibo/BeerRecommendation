@@ -16,6 +16,38 @@ namespace BeerRecommendation
 				return View["index.cshtml"];
 			};
 
+			//database
+			Get["/database"] = _ =>
+			{
+				return View["database_tools.cshtml"];
+			};
+			Get["/database/beers/new"] = _ =>
+			{
+				List<Brewery> allBreweries = Brewery.GetAll();
+				return View["new_beer.cshtml", allBreweries];
+			};
+			Post["/database/beers/new/success"] = _ =>
+			{
+				string name = Request.Form["name"];
+				double abv = (double) Request.Form["abv"];
+				double ibu = (double) Request.Form["ibu"];
+				Beer newBeer = new Beer(name, abv, ibu);
+				newBeer.Save();
+				return View["new_beer_success.cshtml", newBeer];
+			};
+			Get["/database/breweries/new"] = _ =>
+			{
+				return View["new_brewery.cshtml"];
+			};
+			Post["/database/breweries/new/success"] = _ =>
+			{
+				string name = Request.Form["name"];
+				string location = Request.Form["location"];
+				Brewery newBrewery = new Brewery(name, location);
+				newBrewery.Save();
+				return View["new_brewery_success.cshtml", newBrewery];
+			};
+
 			//Login
 			Get["/login"] = _ =>
 			{
@@ -35,6 +67,11 @@ namespace BeerRecommendation
 					bool userExists = false;
 					return View["new_user.cshtml", userExists];
 				}
+			};
+			Get["/logout"] = _ =>
+			{
+				NancyCookie idNumber = new NancyCookie("userId", "0");
+				return View["login.cshtml"].WithCookie(idNumber);
 			};
 
 			//Test page
@@ -102,11 +139,6 @@ namespace BeerRecommendation
 				List<Beer> allBeers = Beer.GetAll();
 				return View["beers.cshtml", allBeers];
 			};
-			Get["/beers/new"] = _ =>
-			{
-				List<Brewery> allBreweries = Brewery.GetAll();
-				return View["new_beer.cshtml", allBreweries];
-			};
 
 			Get["/beers/search"] = _ =>
 			{
@@ -119,16 +151,6 @@ namespace BeerRecommendation
 				string searchInput = Request.Form["search-input"];
 				var foundBeers = Beer.Search(searchBy, searchInput);
 				return View["search_beers.cshtml", foundBeers];
-			};
-
-			Post["/beers/new/success"] = _ =>
-			{
-				string name = Request.Form["name"];
-				double abv = (double) Request.Form["abv"];
-				double ibu = (double) Request.Form["ibu"];
-				Beer newBeer = new Beer(name, abv, ibu);
-				newBeer.Save();
-				return View["new_beer_success.cshtml", newBeer];
 			};
 			Get["/beers/{id}"] = parameters =>
 			{
@@ -151,18 +173,6 @@ namespace BeerRecommendation
 			{
 				List<Brewery> allBreweries = Brewery.GetAll();
 				return View["breweries.cshtml", allBreweries];
-			};
-			Get["/breweries/new"] = _ =>
-			{
-				return View["new_brewery.cshtml"];
-			};
-			Post["/breweries/new/success"] = _ =>
-			{
-				string name = Request.Form["name"];
-				string location = Request.Form["location"];
-				Brewery newBrewery = new Brewery(name, location);
-				newBrewery.Save();
-				return View["new_brewery_success.cshtml", newBrewery];
 			};
 			Get["/breweries/{id}"] = parameters =>
 			{

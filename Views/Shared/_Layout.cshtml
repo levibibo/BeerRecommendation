@@ -9,20 +9,26 @@
   <body>
     <div class="container">
       <div class="page-header">
-        @if (Request.Cookies.ContainsKey("userId"))
+        @if (Request.Cookies.ContainsKey("userId") && Request.Cookies["userId"] != "0")
         {
           <div class="row">
-          <div class="col-md-9">
-          </div>
-            <div class="col-md-3 nav-link">
-              <p>	<a href="/">Home</a> <a href="/users/profile">View Profile</a> <a href="/logout">Log Out</a></p>
+            <div class="col-md-7">
+            </div>
+            <div class="col-md-5 nav-link">
+              <div class="row">
+                  <a href="/">Home</a>&nbsp;&nbsp;<a href="/users/profile">View&nbsp;Profile</a>&nbsp;&nbsp;<a href="/logout">Log&nbsp;Out</a>&nbsp;&nbsp;<a href="/database">Add&nbsp;to&nbsp;Our&nbsp;Database</a>
+              </div>
             </div>
           </div>
         }
         else
         {
-          <div class="nav-link">
-            <p><a href="/login">Log In</a></p>
+          <div class="row">
+          <div class="col-md-9">
+          </div>
+          <div class="col-md-3 nav-link">
+            <p><a href="/">Home</a> <a href="/login">Log In</a></p>
+          </div>
           </div>
         }
         <div class="row">
