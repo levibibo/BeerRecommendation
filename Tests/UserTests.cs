@@ -109,6 +109,24 @@ namespace BeerRecommendation.Objects
     }
 
     [Fact]
+    public void RateBeer_ChangeRating_4()
+    {
+      //Arrange
+      User newUser = new User("Bob");
+      Beer newBeer = new Beer("Alpha IPA", 6.8, 70.0);
+      newUser.Save();
+      newBeer.Save();
+
+      //Act
+      newUser.RateBeer(newBeer.GetId(), 5);
+      newUser.RateBeer(newBeer.GetId(), 4);
+      float testRating = newBeer.GetRating();
+
+      //Assert
+      Assert.Equal(4.0, testRating);
+    }
+
+    [Fact]
     public void CheckUserName_ReturnsUserId_true()
     {
       User newUser = new User("Bob");
