@@ -1,4 +1,5 @@
 using Nancy;
+using Nancy.Cookies;
 using System.Collections.Generic;
 using BeerRecommendation.Objects;
 
@@ -12,6 +13,27 @@ namespace BeerRecommendation
 			Get["/"] = _ =>
 			{
 				return View["index.cshtml"];
+			};
+
+			//Login
+			Get["/login"] = _ =>
+			{
+				return View["login.cshtml"];
+			};
+
+			Post["/login"] = _ =>
+			{
+				string userName = Request.Form["user-name"];
+				int userId = User.CheckUserName(userName);
+				if (userId != 0)
+				{
+					NancyCookie idNumber = new NancyCookie("userId", userId.ToString());
+					return View["index.cshtml"].WithCookie(idNumber);
+				}
+				else
+				{
+					return View["new_user.cshtml"];
+				}
 			};
 
 			//User page

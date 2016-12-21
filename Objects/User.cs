@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using System.Web;
 
 namespace BeerRecommendation.Objects
 {
@@ -145,6 +146,22 @@ namespace BeerRecommendation.Objects
 			if (rdr != null) rdr.Close();
 			if (conn != null) conn.Close();
 			return ratedBeers;
+		}
+
+		public static int CheckUserName(string userName)
+		{
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+
+			SqlCommand cmd = new SqlCommand("SELECT id FROM users WHERE name = @userName;", conn);
+			cmd.Parameters.AddWithValue("@userName", userName);
+
+			var queryResult = cmd.ExecuteScalar();
+
+			int foundId = (queryResult != null) ? (Int32) queryResult : 0;
+
+			if (conn != null) conn.Close();
+			return foundId;
 		}
 
 		//Overrides
