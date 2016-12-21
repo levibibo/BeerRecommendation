@@ -147,7 +147,7 @@ namespace BeerRecommendation.Objects
 			Dictionary<int, List<object>> ratedBeers = new Dictionary<int, List<object>>();
 			SqlConnection conn = DB.Connection();
 			conn.Open();
-			SqlCommand cmd = new SqlCommand("SELECT beers.*, favorites.rating FROM favorites JOIN beers ON (favorites.beer_id = beers.id) WHERE favorites.user_id = @Id;", conn);
+			SqlCommand cmd = new SqlCommand("SELECT beers.*, favorites.rating FROM favorites JOIN beers ON (favorites.beer_id = beers.id) WHERE favorites.user_id = @Id ORDER BY favorites.rating DESC;", conn);
 			cmd.Parameters.AddWithValue("@Id", _id);
 			SqlDataReader rdr = cmd.ExecuteReader();
 			while (rdr.Read())
