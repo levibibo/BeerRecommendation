@@ -2,6 +2,7 @@ body {
   background-image: url(/Content/beer-wood.jpg);
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 .error-message {
   color: red;
@@ -13,6 +14,7 @@ body {
   border-radius: 20px;
   padding: 2% 5% 2% 5%;
   background-color: rgba(255, 255, 255, 0.5);
+  float: center;
 }
 a:link {
   color: rgb(96, 65, 28);
@@ -23,14 +25,18 @@ a:visited {
 a:hover {
   background-color: rgba(255, 255, 255, 0.6);
   color: rgb(142, 103, 55);
+  text-decoration: none;
+}
+.form a:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: rgb(142, 103, 55);
 }
 div .form {
   padding: 5%;
-  width: 60%;
+  width: 65%;
   margin-left: 1%;
   border-radius: 15px;
   background-color: rgba(255, 255, 255, 0.4);
-
 }
 h1 {
   text-align: center;
@@ -40,10 +46,15 @@ h1 {
 }
 h2 {
   color: rgb(79, 56, 29);
+  font-size: 4em;
 }
 h3 {
   color: rgb(79, 56, 29);
   font-size: 3em;
+}
+h4 {
+  color: rgb(79, 56, 29);
+  font-size: 2em;
 }
 .nav-column a {
   background-color: rgba(255, 255, 255, 0.6);
@@ -58,6 +69,14 @@ h3 {
 .nav-column a:hover {
   color: rgb(142, 103, 55);
 }
+.nav-link {
+  float: right:
+}
+.nav-link a {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0% 3% 0% 3%;
+}
 .btn-warning {
   background color: rgb(96, 65, 28);
 }
@@ -67,9 +86,12 @@ label {
 }
 .form a {
   margin-left: 10px;
-  color: white;
+  color: rgb(96, 65, 28);
 }
 
 .submit-div button {
   margin-top: 10px;
+}
+li {
+  list-style: none;
 }
