@@ -1,3 +1,4 @@
+using System;
 using Nancy;
 using Nancy.Cookies;
 using System.Collections.Generic;
@@ -31,7 +32,8 @@ namespace BeerRecommendation
 				}
 				else
 				{
-					return View["new_user.cshtml"];
+					bool userExists = false;
+					return View["new_user.cshtml", userExists];
 				}
 			};
 
@@ -75,7 +77,8 @@ namespace BeerRecommendation
 			};
 			Get["/users/new"] = _ =>
 			{
-				return View["new_user.cshtml", false];
+				bool userExists = false;
+				return View["new_user.cshtml", userExists];
 			};
 			Post["/users/new/success"] = _ =>
 			{
@@ -88,7 +91,8 @@ namespace BeerRecommendation
 				}
 				else
 				{
-					return View["new_user.cshtml", true];
+					bool userExists = true;
+					return View["new_user.cshtml", userExists];
 				}
 			};
 
