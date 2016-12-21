@@ -109,6 +109,28 @@ namespace BeerRecommendation.Objects
     }
 
     [Fact]
+    public void CheckUserName_ReturnsUserId_true()
+    {
+      User newUser = new User("Bob");
+      newUser.Save();
+
+      int foundId = User.CheckUserName("Bob");
+
+      Assert.Equal(newUser.GetId(), foundId);
+    }
+
+    [Fact]
+    public void CheckUserName_Returns0IfNameNotOnTable_true()
+    {
+      User newUser = new User("Bob");
+      newUser.Save();
+
+      int foundId = User.CheckUserName("Joe");
+
+      Assert.Equal(0, foundId);
+    }
+
+    [Fact]
     public void GetRecommendations_ReturnListOfBeersWithPerfectMatch_5()
     {
       //Arrange
