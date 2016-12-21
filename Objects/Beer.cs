@@ -138,7 +138,8 @@ namespace BeerRecommendation.Objects
 			}
 			if (rdr != null) rdr.Close();
 			if (conn != null) conn.Close();
-			return (float) Math.Round(((double) (totalRating/counter)), 2);
+			if (counter == 0) return 0.0F;
+			else return (float) Math.Round(((double) (((double) totalRating)/((double)counter))), 2);
 		}
 
 		public List<Brewery> GetBreweries()

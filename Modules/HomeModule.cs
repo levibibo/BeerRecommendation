@@ -31,7 +31,7 @@ namespace BeerRecommendation
 				}
 				else
 				{
-					return View["new_user.cshtml"];
+					return View["new_user.cshtml", false];
 				}
 			};
 
@@ -115,6 +115,16 @@ namespace BeerRecommendation
 			Get["/beers/{id}"] = parameters =>
 			{
 				Beer foundBeer = Beer.Find(parameters.id);
+				return View["beer.cshtml", foundBeer];
+			};
+			Post["/beers/{id}"] = parameters =>
+			{
+				int userId = int.Parse(Request.Cookies["userId"]);
+				int beerId = int.Parse(parameters.id);
+				int rating = int.Parse(Request.Form["beerRating"]);
+				User foundUser = User.Find(userId);
+				foundUser.RateBeer(beerId, rating);
+				Beer foundBeer = Beer.Find(beerId);
 				return View["beer.cshtml", foundBeer];
 			};
 
