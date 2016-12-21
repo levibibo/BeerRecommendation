@@ -148,8 +148,18 @@ namespace BeerRecommendation
 			Post["/beers/search"] = _ =>
 			{
 				string searchBy = Request.Form["search-type"];
-				string searchInput = Request.Form["search-input"];
-				var foundBeers = Beer.Search(searchBy, searchInput);
+				List<Beer> foundBeers = new List<Beer> {};
+				
+				if (searchBy == "abv" || searchBy == "ibu")
+				{
+					double searchInput = Request.Form["search-input"];
+					foundBeers = Beer.Search(searchBy, searchInput);
+				}
+				else
+				{
+					string searchInput = Request.Form["search-input"];
+					foundBeers = Beer.Search(searchBy, searchInput);
+				}
 				return View["search_beers.cshtml", foundBeers];
 			};
 			Get["/beers/{id}"] = parameters =>
