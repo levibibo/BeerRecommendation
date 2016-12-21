@@ -34,6 +34,7 @@ namespace BeerRecommendation
 				{
 					return View["new_user.cshtml"];
 				}
+			};
 			//Test page
 			Get["/test"] = _ =>
 			{
@@ -46,17 +47,17 @@ namespace BeerRecommendation
 			};
 			Post["/test/result"] = _ =>
 			{
-				int userId = int.Parse(Request.Form["user-id"]);
+				User guest = new User("Guest");
 				int beerId = int.Parse(Request.Form["beer-id"]);
-				User foundUser = User.Find(userId);
-				List<Beer> recommendedBeers = foundUser.GetRecommendations(beerId);
+				List<Beer> recommendedBeers = guest.GetRecommendations(beerId);
 				return View["algorithm_test_result.cshtml", recommendedBeers];
 			};
 
 			//User page
-			Get["/users/{id}"] = parameters =>
+			Get["/users/profile"] = _ =>
 			{
-				User foundUser = User.Find(parameters.id);
+				int userId = int.Parse(Request.Cookies["userId"]);
+				User foundUser = User.Find(userId);
 				return View["user.cshtml", foundUser];
 			};
 			Get["/users/new"] = _ =>
