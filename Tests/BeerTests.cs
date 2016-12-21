@@ -109,6 +109,51 @@ namespace BeerRecommendation.Objects
       Assert.Equal(3.00F, newBeer.GetRating());
     }
 
+    [Fact]
+    public void Search_Name_ReturnsExpectedBeer()
+    {
+      //Arrange
+      Beer beer1 = new Beer("IPA", 6.3, 74.0);
+      Beer beer2 = new Beer("Summer Ale", 4.7, 26.0);
+      beer1.Save();
+      beer2.Save();
+      List<Beer> expectedReturn = new List<Beer> { beer1 };
+      //Act
+      List<Beer> searchResults = Beer.Search("Name", "IPA");
+      //Assert
+      Assert.Equal(expectedReturn, searchResults);
+    }
+
+    [Fact]
+    public void Search_Abv_ReturnsExpectedBeer()
+    {
+      //Arrange
+      Beer beer1 = new Beer("IPA", 6.3, 74.0);
+      Beer beer2 = new Beer("Summer Ale", 4.7, 26.0);
+      beer1.Save();
+      beer2.Save();
+      List<Beer> expectedReturn = new List<Beer> { beer1 };
+      //Act
+      List<Beer> searchResults = Beer.Search("ABV", 6.3);
+      //Assert
+      Assert.Equal(expectedReturn, searchResults);
+    }
+
+    [Fact]
+    public void Search_Ibu_ReturnsExpectedBeer()
+    {
+      //Arrange
+      Beer beer1 = new Beer("IPA", 6.3, 74.0);
+      Beer beer2 = new Beer("Summer Ale", 4.7, 26.0);
+      beer1.Save();
+      beer2.Save();
+      List<Beer> expectedReturn = new List<Beer> { beer1 };
+      //Act
+      List<Beer> searchResults = Beer.Search("ibu", 73, 10);
+      //Assert
+      Assert.Equal(expectedReturn, searchResults);
+    }
+
     public void Dispose()
     {
       Beer.DeleteAll();
