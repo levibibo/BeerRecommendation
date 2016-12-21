@@ -3,6 +3,10 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
 }
+.error-message {
+  color: red;
+  font-style: italic;
+}
 .page-header {
   width: 100%;
   margin: 2% 5% 6% 1%;

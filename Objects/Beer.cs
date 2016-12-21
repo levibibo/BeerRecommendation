@@ -102,14 +102,8 @@ namespace BeerRecommendation.Objects
 			{
 				_id = rdr.GetInt32(0);
 			}
-			if (rdr != null)
-			{
-				rdr.Close();
-			}
-			if (conn != null)
-			{
-				conn.Close();
-			}
+			if (rdr != null) rdr.Close();
+			if (conn != null) conn.Close();
 		}
 
 		public void Update(string name, double abv, double ibu)
@@ -145,6 +139,27 @@ namespace BeerRecommendation.Objects
 			if (rdr != null) rdr.Close();
 			if (conn != null) conn.Close();
 			return (float) Math.Round(((double) (totalRating/counter)), 2);
+		}
+
+		public List<Brewery> GetBreweries()
+		{
+			List<Brewery> foundBreweries = new List<Brewery>{};
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+			SqlCommand cmd = new SqlCommand("SELECT breweries.* FROM beers JOIN beers_breweries ON (beers.id = beers_breweries.beer_id) JOIN breweries ON (beers_breweries.brewery_id = breweries.id) WHERE beers.id = @Id ORDER BY breweries.name;", conn);
+			cmd.Parameters.AddWithValue("@Id", _id);
+			SqlDataReader rdr = cmd.ExecuteReader();
+			while (rdr.Read())
+			{
+				int breweryId = rdr.GetInt32(0);
+				string breweryName = rdr.GetString(1);
+				string breweryLocation = rdr.GetString(2);
+				Brewery newBrewery = new Brewery(breweryName, breweryLocation, breweryId);
+				foundBreweries.Add(newBrewery);
+			}
+			if (rdr != null) rdr.Close();
+			if (conn != null) conn.Close();
+			return foundBreweries;
 		}
 
 		//Overrides

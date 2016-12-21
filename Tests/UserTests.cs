@@ -108,6 +108,128 @@ namespace BeerRecommendation.Objects
       Assert.Equal(newBeer, testBeer);
     }
 
+    [Fact]
+    public void GetRecommendations_ReturnListOfBeersWithPerfectMatch_5()
+    {
+      //Arrange
+      User newUser = new User("Bob");
+      newUser.Save();
+      Beer beer1 = new Beer("Beer One", 5.0, 5.0);
+      beer1.Save();
+      Beer beer2 = new Beer("Beer Two", 5.0, 5.0);
+      beer2.Save();
+      Beer beer3 = new Beer("Beer Three", 5.0, 5.0);
+      beer3.Save();
+      Beer beer4 = new Beer("Beer Four", 5.0, 5.0);
+      beer4.Save();
+      Beer beer5 = new Beer("Beer Five", 5.0, 5.0);
+      beer5.Save();
+      Beer beer6 = new Beer("Beer Six", 5.0, 5.0);
+      beer6.Save();
+      Beer beer7 = new Beer("Beer Seven", 9.0, 9.0);
+      beer7.Save();
+
+      //Act
+      List<Beer> recommendedBeers = newUser.GetRecommendations(beer1.GetId());
+
+      //Assert
+      Assert.Equal(5, recommendedBeers.Count);
+    }
+
+    [Fact]
+    public void GetRecommendations_ReturnListOfBeersWith1RangeIncrease_5()
+    {
+      //Arrange
+      User newUser = new User("Bob");
+      newUser.Save();
+      Beer beer1 = new Beer("Beer One", 5.0, 5.0);
+      beer1.Save();
+      Beer beer2 = new Beer("Beer Two", 5.0, 5.0);
+      beer2.Save();
+      Beer beer3 = new Beer("Beer Three", 5.0, 5.0);
+      beer3.Save();
+      Beer beer4 = new Beer("Beer Four", 5.0, 5.0);
+      beer4.Save();
+      Beer beer5 = new Beer("Beer Five", 6.0, 5.0);
+      beer5.Save();
+      Beer beer6 = new Beer("Beer Six", 5.0, 6.0);
+      beer6.Save();
+      Beer beer7 = new Beer("Beer Seven", 9.0, 9.0);
+      beer7.Save();
+
+      //Act
+      List<Beer> recommendedBeers = newUser.GetRecommendations(beer1.GetId());
+
+      //Assert
+      Assert.Equal(5, recommendedBeers.Count);
+    }
+
+    [Fact]
+    public void GetRecommendations_ReturnOnlyFiveMatchingBeers_5()
+    {
+      //Arrange
+      User newUser = new User("Bob");
+      newUser.Save();
+      Beer beer1 = new Beer("Beer One", 5.0, 5.0);
+      beer1.Save();
+      Beer beer2 = new Beer("Beer Two", 5.0, 5.0);
+      beer2.Save();
+      Beer beer3 = new Beer("Beer Three", 5.0, 5.0);
+      beer3.Save();
+      Beer beer4 = new Beer("Beer Four", 5.0, 5.0);
+      beer4.Save();
+      Beer beer5 = new Beer("Beer Five", 5.0, 5.0);
+      beer5.Save();
+      Beer beer6 = new Beer("Beer Six", 5.0, 5.0);
+      beer6.Save();
+      Beer beer7 = new Beer("Beer Seven", 5.0, 5.0);
+      beer7.Save();
+
+      //Act
+      List<Beer> recommendedBeers = newUser.GetRecommendations(beer1.GetId());
+
+      //Assert
+      Assert.Equal(5, recommendedBeers.Count);
+    }
+
+    [Fact]
+    public void GetRecommendations_ReturnOnlytenMatchingBeers_10()
+    {
+      //Arrange
+      User newUser = new User("Bob");
+      newUser.Save();
+      Beer beer1 = new Beer("Beer One", 5.0, 5.0);
+      beer1.Save();
+      Beer beer2 = new Beer("Beer Two", 5.0, 5.0);
+      beer2.Save();
+      Beer beer3 = new Beer("Beer Three", 5.0, 5.0);
+      beer3.Save();
+      Beer beer4 = new Beer("Beer Four", 5.0, 5.0);
+      beer4.Save();
+      Beer beer5 = new Beer("Beer Five", 5.0, 5.0);
+      beer5.Save();
+      Beer beer6 = new Beer("Beer Six", 5.0, 5.0);
+      beer6.Save();
+      Beer beer7 = new Beer("Beer Seven", 5.0, 5.0);
+      beer7.Save();
+      Beer beer8 = new Beer("Beer Eight", 5.0, 5.0);
+      beer8.Save();
+      Beer beer9 = new Beer("Beer Nine", 5.0, 5.0);
+      beer9.Save();
+      Beer beer10 = new Beer("Beer Ten", 5.0, 5.0);
+      beer10.Save();
+      Beer beer11 = new Beer("Beer Eleven", 5.0, 5.0);
+      beer11.Save();
+      Beer beer12 = new Beer("Beer Twelve", 5.0, 5.0);
+      beer12.Save();
+
+      //Act
+      List<Beer> recommendedBeers = newUser.GetRecommendations(beer1.GetId(), 10);
+
+      //Assert
+      Assert.Equal(10, recommendedBeers.Count);
+    }
+
     public void Dispose()
     {
       Beer.DeleteAll();
