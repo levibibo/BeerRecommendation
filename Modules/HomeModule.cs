@@ -1,4 +1,5 @@
 using Nancy;
+using Nancy.Cookies;
 using System.Collections.Generic;
 using BeerRecommendation.Objects;
 
@@ -14,6 +15,44 @@ namespace BeerRecommendation
 				return View["index.cshtml"];
 			};
 
+			//Login
+			Get["/login"] = _ =>
+			{
+				return View["login.cshtml"];
+			};
+
+			Post["/login"] = _ =>
+			{
+				string userName = Request.Form["user-name"];
+				int userId = User.CheckUserName(userName);
+				if (userId != 0)
+				{
+					NancyCookie idNumber = new NancyCookie("userId", userId.ToString());
+					return View["index.cshtml"].WithCookie(idNumber);
+				}
+				else
+				{
+					return View["new_user.cshtml"];
+				}
+			//Test page
+			Get["/test"] = _ =>
+			{
+				List<Beer> allBeers = Beer.GetAll();
+				List<User> allUsers = User.GetAll();
+				Dictionary<string, object> Model = new Dictionary<string, object>();
+				Model["beers"] = allBeers;
+				Model["users"] = allUsers;
+				return View["algorithm_test_form.cshtml", Model];
+			};
+			Post["/test/result"] = _ =>
+			{
+				int userId = int.Parse(Request.Form["user-id"]);
+				int beerId = int.Parse(Request.Form["beer-id"]);
+				User foundUser = User.Find(userId);
+				List<Beer> recommendedBeers = foundUser.GetRecommendations(beerId);
+				return View["algorithm_test_result.cshtml", recommendedBeers];
+			};
+
 			//User page
 			Get["/users/{id}"] = parameters =>
 			{
@@ -22,14 +61,21 @@ namespace BeerRecommendation
 			};
 			Get["/users/new"] = _ =>
 			{
-				return View["new_user.cshtml"];
+				return View["new_user.cshtml", false];
 			};
 			Post["/users/new/success"] = _ =>
 			{
 				string name = Request.Form["name"];
-				User newUser = new User(name);
-				newUser.Save();
-				return View["new_user_success.cshtml", newUser];
+				if (!(User.UserExists(name)))
+				{
+					User newUser = new User(name);
+					newUser.Save();
+					return View["new_user_success.cshtml", newUser];
+				}
+				else
+				{
+					return View["new_user.cshtml", true];
+				}
 			};
 
 			//Beer page
