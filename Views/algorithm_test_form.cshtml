@@ -3,12 +3,6 @@
 }
 <h2>Get Recommended Beers</h2>
 <form action="/test/result" method="post">
-  <select class="form-control" name="user-id">
-    @foreach (var user in Model["users"])
-    {
-      <option value="@user.GetId()">@user.GetName()</option>
-    }
-  </select>
   <select class="form-control" name="beer-id">
     @foreach (var beer in Model["beers"])
     {
