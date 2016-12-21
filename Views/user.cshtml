@@ -10,7 +10,7 @@
 		<ul>
 		@foreach (var beerId in ratedBeers.Keys)
 		{
-			<li><h4>@ratedBeers[beerId][0].GetName() - Rating: @ratedBeers[beerId][1] out of 5</h4></li>
+			<li><h4><a href="/beers/@ratedBeers[beerId][0].GetId()">@ratedBeers[beerId][0].GetName()</a> - Rating: @ratedBeers[beerId][1] out of 5</h4></li>
 		}
 		</ul>
 	}

@@ -65,7 +65,7 @@ namespace BeerRecommendation
 				else
 				{
 					bool userExists = false;
-					return View["new_user.cshtml", userExists];
+					return View["login.cshtml", userExists];
 				}
 			};
 			Get["/logout"] = _ =>
@@ -114,8 +114,7 @@ namespace BeerRecommendation
 			};
 			Get["/users/new"] = _ =>
 			{
-				bool userExists = false;
-				return View["new_user.cshtml", userExists];
+				return View["new_user.cshtml"];
 			};
 			Post["/users/new/success"] = _ =>
 			{
