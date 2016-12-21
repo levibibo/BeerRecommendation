@@ -69,3 +69,7 @@ label {
   margin-left: 10px;
   color: white;
 }
+
+.submit-div button {
+  margin-top: 10px;
+}
