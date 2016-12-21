@@ -5,9 +5,16 @@
 	<form action="/users/new/success" method="post">
 	  <input class="form-control" type="text" name="name" placeholder="User Name" required>
 		<br>
-		@if (Model)
+		@if(Model != null)
 		{
-			<p class="error-message">That user name already exists.  Please choose a new name.</p>
+			@if (Model == true)
+			{
+				<p class="error-message">That user name already exists. Please choose a new name.</p>
+			}
+			else if (Model == false)
+			{
+				<p class="error-message">That user name does not exist. Please create a new user.</p>
+			}
 		}
 	  <button class="btn btn-warning" type="submit">Add User</button>
 	</form>
