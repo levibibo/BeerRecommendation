@@ -45,6 +45,50 @@ namespace BeerRecommendation.Objects
 			return allBeers;
 		}
 
+		//Overload for different order-by parameters
+		public static List<Beer> GetAll(string orderBy)
+		{
+			List<Beer> allBeers = new List<Beer>{};
+
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+
+			SqlCommand cmd = new SqlCommand();
+			cmd.Connection = conn;
+
+			switch (orderBy)
+			{
+				case "name":
+						cmd.CommandText = "SELECT * FROM beers ORDER BY name ASC;";
+						break;
+				case "abv":
+						cmd.CommandText = "SELECT * FROM beers ORDER BY abv DESC;";
+						break;
+				case "ibu":
+						cmd.CommandText = "SELECT * FROM beers ORDER BY ibu DESC;";
+						break;
+				default:
+					break;
+			}
+
+			SqlDataReader rdr = cmd.ExecuteReader();
+			while(rdr.Read())
+			{
+				int id = rdr.GetInt32(0);
+				string name = rdr.GetString(1);
+				double abv = (rdr.IsDBNull(2))? 0.0 : rdr.GetDouble(2);
+				double ibu = (rdr.IsDBNull(3))? 0.0 : rdr.GetDouble(3);
+
+				Beer newBeer = new Beer(name, abv, ibu, id);
+				allBeers.Add(newBeer);
+			}
+
+			if (rdr != null) rdr.Close();
+			if (conn != null) conn.Close();
+
+			return allBeers;
+		}
+
 		public static Beer Find(int id)
 		{
 			SqlConnection conn = DB.Connection();

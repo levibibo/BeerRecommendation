@@ -138,6 +138,13 @@ namespace BeerRecommendation
 				List<Beer> allBeers = Beer.GetAll();
 				return View["beers.cshtml", allBeers];
 			};
+
+			Get["/beers/ordered/{col}"] = parameters =>
+			{
+				List<Beer> allBeers = Beer.GetAll(parameters.col);
+				return View["beers.cshtml", allBeers];
+			};
+
 			Get["/beers/search"] = _ =>
 			{
 				return View["search_beers.cshtml"];
