@@ -152,8 +152,15 @@ namespace BeerRecommendation
 
 				if (searchBy == "abv" || searchBy == "ibu")
 				{
-					double searchInput = Request.Form["search-input"];
-					foundBeers = Beer.Search(searchBy, searchInput);
+					try
+					{
+						double searchInput = Request.Form["search-input"];
+						foundBeers = Beer.Search(searchBy, searchInput);
+					}
+					catch
+					{
+						//do nothing, return empty list
+					}
 				}
 				else
 				{

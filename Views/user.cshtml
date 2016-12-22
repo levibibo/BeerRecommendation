@@ -1,6 +1,7 @@
 @{
 	Layout = "Shared/_Layout.cshtml";
 	var ratedBeers = @Model.GetRated();
+	var userId = @Model.GetId();
 }
 <div class="form">
 	<h2>@Model.GetName()</h2>
@@ -10,12 +11,14 @@
 		<ul>
 		@foreach (var beer in ratedBeers)
 		{
-			<li><h4><a href="/beers/@beer.GetId()">@beer.GetName()</a> - Rating: @beer.GetUserRating(@Model.GetId()) out of 5</h4></li>
+			<li><h4><a href="/beers/@beer.GetId()">@beer.GetName()</a> - Rating: @beer.GetUserRating(userId) out of 5</h4></li>
 			<form action="/recommend/results" method="get">
 				<input type="hidden" name="beer-id" value="@beer.GetId()">
 				<input type="hidden" name="list-size" value="5">
 				<button class="btn btn-warning" type="submit">Get similar beers</button>
 			</form>
+			<li><h4><a href="/beers/@beer.GetId()">@beer.GetName()</a> - Rating: @beer.GetUserRating(userId) out of 5</h4></li>
+
 		}
 		</ul>
 	}

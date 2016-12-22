@@ -237,6 +237,23 @@ namespace BeerRecommendation.Objects
 			else return (float) Math.Round(((double) (((double) totalRating)/((double)counter))), 2);
 		}
 
+		public int GetUserRating(int userId)
+		{
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+			SqlCommand cmd = new SqlCommand("SELECT favorites.rating FROM favorites JOIN beers ON (favorites.beer_id = beers.id) WHERE beers.id = @BeerId AND favorites.user_id = @UserId;", conn);
+			cmd.Parameters.AddWithValue("@BeerId", _id);
+			cmd.Parameters.AddWithValue("@UserId", userId);
+			SqlDataReader rdr = cmd.ExecuteReader();
+			int userRating = 0;
+			while (rdr.Read())
+			{
+				userRating = rdr.GetInt32(0);
+			}
+			if (rdr != null) rdr.Close();
+			return userRating;
+		}
+
 		public List<Brewery> GetBreweries()
 		{
 			List<Brewery> foundBreweries = new List<Brewery>{};
