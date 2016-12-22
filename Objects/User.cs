@@ -10,10 +10,12 @@ namespace BeerRecommendation.Objects
 	{
 		private int _id;
 		private string _name;
+		private string _password;
 
-		public User(string name, int id = 0)
+		public User(string name, string password ="", int id = 0)
 		{
 			_name = name;
+			_password = password;
 			_id = id;
 		}
 
@@ -31,8 +33,9 @@ namespace BeerRecommendation.Objects
 			{
 				int id = rdr.GetInt32(0);
 				string name = rdr.GetString(1);
+				string password = rdr.GetString(2);
 
-				User newUser = new User(name, id);
+				User newUser = new User(name, password, id);
 				allUsers.Add(newUser);
 			}
 			if (rdr != null) rdr.Close();
@@ -44,16 +47,18 @@ namespace BeerRecommendation.Objects
 		{
 			SqlConnection conn = DB.Connection();
 			conn.Open();
-			SqlCommand cmd = new SqlCommand("SELECT name FROM users WHERE id = @Id;", conn);
+			SqlCommand cmd = new SqlCommand("SELECT name, password FROM users WHERE id = @Id;", conn);
 			cmd.Parameters.AddWithValue("@Id", id);
 			SqlDataReader rdr = cmd.ExecuteReader();
 			string name = null;
+			string password = null;
 			while (rdr.Read())
 			{
 				name = rdr.GetString(0);
+				password = rdr.GetString(1);
 			}
 			if (rdr != null) rdr.Close();
-			return new User(name, id);
+			return new User(name, password, id);
 		}
 
 		public static bool UserExists(string name)
@@ -71,6 +76,27 @@ namespace BeerRecommendation.Objects
 			if (rdr != null) rdr.Close();
 			if (conn != null) conn.Close();
 			return userExists;
+		}
+
+		public bool CheckPassword(string password)
+		{
+			return _password == password;
+		}
+
+		public static int CheckUserName(string userName)
+		{
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+
+			SqlCommand cmd = new SqlCommand("SELECT id FROM users WHERE name = @userName;", conn);
+			cmd.Parameters.AddWithValue("@userName", userName);
+
+			var queryResult = cmd.ExecuteScalar();
+
+			int foundId = (queryResult != null) ? (Int32) queryResult : 0;
+
+			if (conn != null) conn.Close();
+			return foundId;
 		}
 
 		public static void DeleteUser(int id)
@@ -98,9 +124,11 @@ namespace BeerRecommendation.Objects
 			SqlConnection conn = DB.Connection();
 			conn.Open();
 
-			SqlCommand cmd = new SqlCommand("INSERT INTO users (name) OUTPUT INSERTED.id VALUES (@Name);", conn);
+			SqlCommand cmd = new SqlCommand("INSERT INTO users (name, password) OUTPUT INSERTED.id VALUES (@Name, @Password);", conn);
 
 			cmd.Parameters.AddWithValue("@Name", _name);
+
+			cmd.Parameters.AddWithValue("@Password", _password);
 
 			SqlDataReader rdr = cmd.ExecuteReader();
 
@@ -162,22 +190,6 @@ namespace BeerRecommendation.Objects
 			if (rdr != null) rdr.Close();
 			if (conn != null) conn.Close();
 			return ratedBeers;
-		}
-
-		public static int CheckUserName(string userName)
-		{
-			SqlConnection conn = DB.Connection();
-			conn.Open();
-
-			SqlCommand cmd = new SqlCommand("SELECT id FROM users WHERE name = @userName;", conn);
-			cmd.Parameters.AddWithValue("@userName", userName);
-
-			var queryResult = cmd.ExecuteScalar();
-
-			int foundId = (queryResult != null) ? (Int32) queryResult : 0;
-
-			if (conn != null) conn.Close();
-			return foundId;
 		}
 
 		public List<Beer> GetRecommendations(int baseBeerId, int listSize = 5, double ibuModifierIncrement = 2.0, double abvModifierIncrement = 0.1)
