@@ -67,13 +67,31 @@ p {
 
 .nav-column a {
   background-color: rgba(255, 255, 255, 0.6);
-  width: 60%;
-  margin: 0% 2% 5% 15%;
+  width: 70%;
+  margin: 0% 2% 5% 1%;
   border-radius: 10px;
   padding: 2% 2% 2% 2%;
   line-height: 6em;
   font-weight: 600;
+  font-size: 1.2em;
   color: rgb(96, 65, 28);
+  text-align: center;
+}
+.main-text {
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 70%;
+  margin: 2% 2% 5% 1%;
+  border-radius: 10px;
+  padding: 2% 2% 2% 2%;
+  /*line-height: 6em;*/
+  font-weight: 500;
+}
+.main-text h3 {
+  color: rgba(255, 255, 255, 0.6);
+}
+.main-text p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.2em;
 }
 .nav-column a:hover {
   color: rgb(142, 103, 55);
