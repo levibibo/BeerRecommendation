@@ -4,11 +4,11 @@
 <div class="recommend">
 	<h2>Get Recommended Beers</h2>
 	<div class="row">
-	  <form action="/recommend/results" method="post">
+	  <form action="/recommend/results" method="get">
 	    <div class="col-sm-7">
 	      <label for="beer-id">Select a beer you like:</label>
 	      <select class="form-control" name="beer-id">
-	        @foreach (var beer in Model["beers"])
+	        @foreach (var beer in Model)
 	        {
 	          <option value="@beer.GetId()">@beer.GetName() -
 	          <strong>Brewery:</strong>

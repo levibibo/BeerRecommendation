@@ -199,7 +199,7 @@ namespace BeerRecommendation.Objects
 				double ibuPositive = baseIbu + ibuModifier;
 
 				//Get all beers within range for ibu and abv, and where the beer isn't given and hasn't been rated by the user
-				SqlCommand cmd = new SqlCommand("SELECT beers.* FROM beers LEFT JOIN favorites ON (beers.id = favorites.beer_id) WHERE (beers.abv BETWEEN @AbvNegative AND @AbvPositive) AND (beers.ibu BETWEEN @IbuNegative AND @IbuPositive) AND (beers.id != @BeerId) ORDER BY beers.name ASC;", conn);
+				SqlCommand cmd = new SqlCommand("SELECT * FROM beers WHERE (beers.abv BETWEEN @AbvNegative AND @AbvPositive) AND (beers.ibu BETWEEN @IbuNegative AND @IbuPositive) AND(beers.id != @BeerId) AND(beers.id NOT IN (SELECT favorites.beer_id FROM favorites WHERE(favorites.user_id = @UserId))) ORDER BY beers.name ASC;", conn);
 				cmd.Parameters.AddWithValue("@AbvNegative", abvNegative);
 				cmd.Parameters.AddWithValue("@AbvPositive", abvPositive);
 				cmd.Parameters.AddWithValue("@IbuNegative", ibuNegative);
