@@ -6,7 +6,7 @@
 }
 <div class="form">
   <h2>@Model.GetName()</h2>
-	<h3>Brewery(ies):</h3>
+	<h3>Brewery:</h3>
 	@foreach (var brewery in @Model.GetBreweries())
 	{
 		<h4><a href="/breweries/@brewery.GetId()">@brewery.GetName()</a></h4>
