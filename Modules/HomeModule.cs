@@ -57,10 +57,11 @@ namespace BeerRecommendation
 			{
 				string userName = Request.Form["user-name"];
 				string userPassword = Request.Form["password"];
+				string passwordHash = Hash.CalculateHash(userPassword).ToString();
 				int userId = User.CheckUserName(userName);
 				var foundUser = User.Find(userId);
 
-				if (userId != 0 && foundUser.CheckPassword(userPassword))
+				if (userId != 0 && foundUser.CheckPassword(passwordHash))
 				{
 					NancyCookie idNumber = new NancyCookie("userId", userId.ToString());
 					return View["login_success.cshtml", foundUser].WithCookie(idNumber);
@@ -121,9 +122,10 @@ namespace BeerRecommendation
 			{
 				string name = Request.Form["name"];
 				string password = Request.Form["password"];
+				string passwordHash = Hash.CalculateHash(password).ToString();
 				if (!(User.UserExists(name)))
 				{
-					User newUser = new User(name, password);
+					User newUser = new User(name, passwordHash);
 					newUser.Save();
 					return View["new_user_success.cshtml", newUser];
 				}
