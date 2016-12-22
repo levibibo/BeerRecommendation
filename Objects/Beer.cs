@@ -62,10 +62,10 @@ namespace BeerRecommendation.Objects
 						cmd.CommandText = "SELECT * FROM beers ORDER BY name ASC;";
 						break;
 				case "abv":
-						cmd.CommandText = "SELECT * FROM beers ORDER BY abv ASC;";
+						cmd.CommandText = "SELECT * FROM beers ORDER BY abv DESC;";
 						break;
 				case "ibu":
-						cmd.CommandText = "SELECT * FROM beers ORDER BY ibu ASC;";
+						cmd.CommandText = "SELECT * FROM beers ORDER BY ibu DESC;";
 						break;
 				default:
 					break;
