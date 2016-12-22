@@ -139,6 +139,12 @@ namespace BeerRecommendation
 				return View["beers.cshtml", allBeers];
 			};
 
+			Get["/beers/ordered/{col}"] = parameters =>
+			{
+				List<Beer> allBeers = Beer.GetAll(parameters.col);
+				return View["beers.cshtml", allBeers];
+			};
+
 			Get["/beers/search"] = _ =>
 			{
 				return View["search_beers.cshtml"];
@@ -148,7 +154,7 @@ namespace BeerRecommendation
 			{
 				string searchBy = Request.Form["search-type"];
 				List<Beer> foundBeers = new List<Beer> {};
-				
+
 				if (searchBy == "abv" || searchBy == "ibu")
 				{
 					double searchInput = Request.Form["search-input"];
