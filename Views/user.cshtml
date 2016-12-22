@@ -8,18 +8,20 @@
 	@if (ratedBeers.Count > 0)
 	{
 		<h3>Rated beers</h3>
-		<ul>
 		@foreach (var beer in ratedBeers)
 		{
-			<li><h4><a href="/beers/@beer.GetId()">@beer.GetName()</a> - Rating: @beer.GetUserRating(userId) out of 5</h4></li>
-			<form action="/recommend/results" method="get">
-				<input type="hidden" name="beer-id" value="@beer.GetId()">
-				<input type="hidden" name="list-size" value="5">
-				<button class="btn btn-warning" type="submit">Get similar beers</button>
-			</form>
-			<li><h4><a href="/beers/@beer.GetId()">@beer.GetName()</a> - Rating: @beer.GetUserRating(userId) out of 5</h4></li>
-
+			<div class="row beer-list-item">
+				<div class="col-md-8">
+					<h4><a href="/beers/@beer.GetId()">@beer.GetName()</a> - Rating: @beer.GetUserRating(userId) out of 5</h4>
+				</div>
+				<div class="col-md-4">
+					<form action="/recommend/results" method="get">
+					<input type="hidden" name="beer-id" value="@beer.GetId()">
+					<input type="hidden" name="list-size" value="5">
+					<button class="btn btn-warning" type="submit">Get similar beers</button>
+					</form>
+				</div>
+			</div>
 		}
-		</ul>
 	}
 </div>

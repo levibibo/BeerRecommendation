@@ -8,6 +8,12 @@ body {
   color: red;
   font-style: italic;
 }
+.beer-list-item {
+  
+}
+.beer-list-item button {
+  vertical-align: middle;
+}
 .page-header {
   width: 100%;
   margin: 2% 5% 6% 1%;
