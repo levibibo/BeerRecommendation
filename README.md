@@ -1,13 +1,15 @@
 #Beer Recommendation
 ===========================
 
-_Get recommendations for new beer to try, December 16, 2016_
+Oregon Beer Central. Get recommendations for new beer to try, December 16, 2016
 
-_By Levi Bibo, Steve Burton, and Erik Killops_
+By Levi Bibo, Steve Burton, Anthony Bottemiller, and Erik Killops
 
 ##Description
 
-_Enter one or more beers you enjoy and get a list of similar beers to try._
+This project is a database of Oregon beers that allows users to browse beers and breweries, create an account, and add and rate beers.
+
+The app includes features to discover new beers. Click the Beer Recommendations link and enter your favorite beer to find similar brews.
 
 ##Specifications
 
@@ -31,12 +33,26 @@ _Enter one or more beers you enjoy and get a list of similar beers to try._
 | Program will allow user to rate a beer in the DB                               | 5                  | 5                  |
 | Program will allow user to find a new beer based on a generated recommendation | {beer 1}           | {similar beer 2}   |
 
-##Support and contact details
+## Setup/Installation Requirements
 
-Check out our GitHub accounts:
+_Requires Windows, .Net, SMSS, and SQL SERVER_
+
+1. Clone repository.
+2. In SSMS, open beer_recommendation.sql
+3. Click execute.
+4. Repeat steps 2-5 for beer_recommendation_test.
+5. In Powershell,  run ">dnx kestrel" and visit "localhost:5004".
+
+Alternatively, open the .sql files in a text editor and run the commands one at a time in a SQL command line.
+
+An image of the schema is included for reference.
+
+
+##Check out our GitHub accounts:
 * [Levi Bibo.](https://www.github.com/levibibo)
 * [Steve Burton.](https://www.github.com/steve-burton)
 * [Erik Killops.](https://www.github.com/ekillops)
+* [Anthony Bottemiller.](https://www.github.com/anthonybottemiller)
 
 ##Technologies used
 
