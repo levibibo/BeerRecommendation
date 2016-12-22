@@ -8,7 +8,6 @@
 	    <div class="col-sm-7">
 	      <label for="beer-id">Select a beer you like:</label>
 	      <select class="form-control" name="beer-id" required>
-					<option disabled selected>Beer</option>
 	        @foreach (var beer in Model)
 	        {
 	          <option value="@beer.GetId()">@beer.GetName() -
