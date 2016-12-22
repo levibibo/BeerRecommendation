@@ -142,12 +142,12 @@ namespace BeerRecommendation.Objects
 			if (conn != null) conn.Close();
 		}
 
-		public Dictionary<int, List<object>> GetRated()
+		public List<Beer> GetRated()
 		{
-			Dictionary<int, List<object>> ratedBeers = new Dictionary<int, List<object>>();
+			List<Beer> ratedBeers = new List<Beer>{};
 			SqlConnection conn = DB.Connection();
 			conn.Open();
-			SqlCommand cmd = new SqlCommand("SELECT beers.*, favorites.rating FROM favorites JOIN beers ON (favorites.beer_id = beers.id) WHERE favorites.user_id = @Id ORDER BY favorites.rating DESC;", conn);
+			SqlCommand cmd = new SqlCommand("SELECT beers.* FROM favorites JOIN beers ON (favorites.beer_id = beers.id) WHERE favorites.user_id = @Id ORDER BY favorites.rating DESC;", conn);
 			cmd.Parameters.AddWithValue("@Id", _id);
 			SqlDataReader rdr = cmd.ExecuteReader();
 			while (rdr.Read())
@@ -156,9 +156,8 @@ namespace BeerRecommendation.Objects
 				string beerName = rdr.GetString(1);
 				double beerAbv = (rdr.IsDBNull(2))? 0.0 : rdr.GetDouble(2);
 				double beerIbu = (rdr.IsDBNull(3))? 0.0 : rdr.GetDouble(3);
-				int rating = rdr.GetInt32(4);
 				Beer foundBeer = new Beer(beerName, beerAbv, beerIbu, beerId);
-				ratedBeers[foundBeer.GetId()] = new List<object> {foundBeer, rating};
+				ratedBeers.Add(foundBeer);
 			}
 			if (rdr != null) rdr.Close();
 			if (conn != null) conn.Close();
@@ -230,6 +229,9 @@ namespace BeerRecommendation.Objects
 			{
 				chosenBeers.RemoveRange(listSize, (chosenBeers.Count - listSize));
 			}
+
+			//lambda expression sorts list in descending order of aggregate user rating
+			chosenBeers.Sort((beer1, beer2) => beer2.GetRating().CompareTo(beer1.GetRating()));
 
 			if (conn != null) conn.Close();
 			return chosenBeers;

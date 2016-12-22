@@ -8,12 +8,16 @@
 	  @foreach (var beer in Model)
 	  {
 	    <li>
-	    <p><a href="/beers/@beer.GetId()">@beer.GetName()</a> -
-	    Brewery:
-	    @foreach (var brewery in beer.GetBreweries())
-	    {
-	      <a href="/breweries/@brewery.GetId()"> @brewery.GetName()</a></p>
-	    }</li>
+		    <p>
+			    <a href="/beers/@beer.GetId()">@beer.GetName()</a> -
+			    Brewery:
+			    @foreach (var brewery in beer.GetBreweries())
+			    {
+			      <a href="/breweries/@brewery.GetId()"> @brewery.GetName()</a>
+			    }
+			    Average User Rating: @beer.GetRating() out of 5
+		    </p>
+	    </li>
 	  }
 	</ul>
 </div>
