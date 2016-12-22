@@ -56,10 +56,12 @@ namespace BeerRecommendation
 			Post["/login"] = _ =>
 			{
 				string userName = Request.Form["user-name"];
+				string userPassword = Request.Form["password"];
 				int userId = User.CheckUserName(userName);
-				if (userId != 0)
+				var foundUser = User.Find(userId);
+
+				if (userId != 0 && foundUser.CheckPassword(userPassword))
 				{
-					var foundUser = User.Find(userId);
 					NancyCookie idNumber = new NancyCookie("userId", userId.ToString());
 					return View["login_success.cshtml", foundUser].WithCookie(idNumber);
 				}
@@ -118,9 +120,10 @@ namespace BeerRecommendation
 			Post["/users/new/success"] = _ =>
 			{
 				string name = Request.Form["name"];
+				string password = Request.Form["password"];
 				if (!(User.UserExists(name)))
 				{
-					User newUser = new User(name);
+					User newUser = new User(name, password);
 					newUser.Save();
 					return View["new_user_success.cshtml", newUser];
 				}
