@@ -1,7 +1,7 @@
 #Beer Recommendation
 ===========================
 
-Oregon Beer Central. Get recommendations for new beer to try, December 16, 2016
+Oregon Beer Central. Get recommendations for new beers to try, December 16, 2016
 
 By Levi Bibo, Steve Burton, Anthony Bottemiller, and Erik Killops
 
@@ -40,8 +40,8 @@ _Requires Windows, .Net, SMSS, and SQL SERVER_
 1. Clone repository.
 2. In SSMS, open beer_recommendation.sql
 3. Click execute.
-4. Repeat steps 2-5 for beer_recommendation_test.
-5. In Powershell,  run ">dnx kestrel" and visit "localhost:5004".
+4. Repeat steps 2-5 for beer_recommendation_test.sql
+5. In Powershell,  run "> dnx kestrel" and visit "localhost:5004".
 
 Alternatively, open the .sql files in a text editor and run the commands one at a time in a SQL command line.
 
@@ -56,7 +56,7 @@ An image of the schema is included for reference.
 
 ##Technologies used
 
-_This site was built using C# and ASP.Net._
+_This site was built using C#, Nancy, SQL Server, CSS, Bootstrap and ASP.Net._
 
 ##License
 

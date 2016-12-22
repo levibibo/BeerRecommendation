@@ -76,4 +76,9 @@
 			<button class="btn btn-warning" type="submit">Rate</button>
 		</form>
 	}
+	<br>
+	<form class="form-inline" action="/database/beers/update" method="get">
+		<input type="hidden" name="beer-id" value="@Model.GetId()">
+		<button type="submit" class="btn btn-warning">Edit Beer</button>
+	</form>
 </div>
