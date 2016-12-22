@@ -78,11 +78,6 @@ namespace BeerRecommendation.Objects
 			return userExists;
 		}
 
-		public bool CheckPassword(string password)
-		{
-			return _password == password;
-		}
-
 		public static int CheckUserName(string userName)
 		{
 			SqlConnection conn = DB.Connection();
@@ -144,6 +139,11 @@ namespace BeerRecommendation.Objects
 			{
 				conn.Close();
 			}
+		}
+
+		public bool CheckPassword(string password)
+		{
+			return _password == password;
 		}
 
 		public void Update(string name)
