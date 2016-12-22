@@ -137,6 +137,19 @@ namespace BeerRecommendation.Objects
       if (conn != null) conn.Close();
     }
 
+    public void RemoveBeer(int beerId)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM beers_breweries WHERE beer_id = @BeerId AND brewery_id = @BreweryId);", conn);
+      cmd.Parameters.AddWithValue("@BeerId", beerId);
+      cmd.Parameters.AddWithValue("@BreweryId", this.GetId());
+
+      cmd.ExecuteNonQuery();
+      if (conn != null) conn.Close();
+    }
+
     public void Save()
     {
       SqlConnection conn = DB.Connection();

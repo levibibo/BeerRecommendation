@@ -363,6 +363,44 @@ namespace BeerRecommendation.Objects
 			return foundBreweries;
 		}
 
+		public void AddBrewery(int breweryId)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("INSERT INTO beers_breweries (beer_id, brewery_id) VALUES (@BeerId, @BreweryId);", conn);
+      cmd.Parameters.AddWithValue("@BeerId", this.GetId());
+      cmd.Parameters.AddWithValue("@BreweryId", breweryId);
+
+      cmd.ExecuteNonQuery();
+      if (conn != null) conn.Close();
+    }
+
+    public void RemoveBrewery(int breweryId)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM beers_breweries WHERE beer_id = @BeerId AND brewery_id = @BreweryId;", conn);
+      cmd.Parameters.AddWithValue("@BeerId", this.GetId());
+      cmd.Parameters.AddWithValue("@BreweryId", breweryId);
+
+      cmd.ExecuteNonQuery();
+      if (conn != null) conn.Close();
+    }
+
+		public void RemoveAllBreweries()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM beers_breweries WHERE beer_id = @BeerId;", conn);
+      cmd.Parameters.AddWithValue("@BeerId", this.GetId());
+
+      cmd.ExecuteNonQuery();
+      if (conn != null) conn.Close();
+    }
+
 		//Overrides
 		public override bool Equals(Object otherBeer)
 		{

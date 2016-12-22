@@ -190,6 +190,34 @@ namespace BeerRecommendation
 				newBeer.Save();
 				return View["new_beer_success.cshtml", newBeer];
 			};
+
+			Get["/database/beers/update"] = _ => {
+				int beerId = int.Parse(Request.Query["beer-id"]);
+				Beer foundBeer = Beer.Find(beerId);
+				List<Brewery> allBreweries = Brewery.GetAll();
+
+				Dictionary<string, object> beerAndBreweries = new Dictionary<string, object>()
+				{
+					{"beer", foundBeer},
+					{"breweries", allBreweries}
+				};
+
+				return View["beer_update.cshtml", beerAndBreweries];
+			};
+
+			Patch["/database/beers/{id}"] = parameters => {
+				string name = Request.Form["name"];
+				double abv = (double) Request.Form["abv"];
+				double ibu = (double) Request.Form["ibu"];
+				int breweryId = int.Parse(Request.Form["brewery"]);
+
+				Beer foundBeer = Beer.Find(int.Parse(parameters.id));
+				foundBeer.Update(name, abv, ibu);
+				foundBeer.RemoveAllBreweries();
+				foundBeer.AddBrewery(breweryId);
+				return View["beer.cshtml", foundBeer];
+			};
+			
 			Get["/database/breweries/new"] = _ =>
 			{
 				return View["new_brewery.cshtml"];
