@@ -4,13 +4,20 @@
 }
 <div class="form">
   <h2>@Model.GetName()</h2>
-  <h3>This brewery has brews such as</h2>
+	<div class="under-line"></div>
+  <h4>Beers by this brewery</h4>
     @if (beers.Count > 0)
     {
       <ul>
       @foreach(var beer in beers)
       {
-        <p><li><a href="/beers/@beer.GetId()">@beer.GetName()</a></li></p>
+				<li>
+					<div class="row">
+						<div class="col-md-12">
+		        	<p><a href="/beers/@beer.GetId()">@beer.GetName()</a></p>
+						</div>
+					</div>
+				</li>
       }
 			</ul>
     }

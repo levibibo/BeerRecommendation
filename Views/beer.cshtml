@@ -3,36 +3,46 @@
 	double abv = @Model.GetAbv();
 	double ibu = @Model.GetIbu();
 	float rating = @Model.GetRating();
+	var breweries = @Model.GetBreweries();
 }
 <div class="form">
-  <h2>@Model.GetName()</h2>
-	<h3>Brewery:</h3>
-	@foreach (var brewery in @Model.GetBreweries())
-	{
-		<h4><a href="/breweries/@brewery.GetId()">@brewery.GetName()</a></h4>
-	}
-	@if (abv == 0.0)
-	{
-		<h4>Alcohol by volume: Unknown</h4>
-	}
-	else
-	{
-		<h4>Alcohol by volume: @abv%</h4>
-	}
-	@if (ibu == 0.0)
-	{
-		<h4>Bitterness: Unknown</h4>
-	}
-	else
-	{
-		<h4>Bitterness: @ibu IBU</h4>
-	}
+  <h3>
+		@foreach (var brewery in breweries)
+		{
+			<a href="/breweries/@brewery.GetId()">@brewery.GetName()</a>
+		}
+		@Model.GetName()
+	</h3>
+	<div class="under-line"></div>
+	<!-- <h4>Brewery:</h4> -->
+	<div class="row">
+		<div class="col-md-6">
+			@if (abv == 0.0)
+			{
+				<h4>Alcohol by volume: Unknown</h4>
+			}
+			else
+			{
+				<h4>Alcohol by volume: @abv%</h4>
+			}
+		</div>
+		<div class="col-md-6">
+			@if (ibu == 0.0)
+			{
+				<h4>Bitterness: Unknown</h4>
+			}
+			else
+			{
+				<h4>Bitterness: @ibu IBU</h4>
+			}
+		</div>
+	</div>
 	@if (rating > 0.0)
 	{
 		<h4>Average user rating: @rating out of 5</h4>
 	}
-
-	<h4>Similar Beers:</h4>
+	<br>
+	<h4>Similar beers:</h4>
 	<ul>
 		@foreach (var beer in Model.GetSimilar())
 		{
