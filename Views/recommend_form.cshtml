@@ -11,7 +11,7 @@
 	        @foreach (var beer in Model["beers"])
 	        {
 	          <option value="@beer.GetId()">@beer.GetName() -
-	          <strong>Brewery(ies):</strong>
+	          <strong>Brewery:</strong>
 	          @foreach (var brewery in beer.GetBreweries())
 	          {
 	            <span> @brewery.GetName()</span>
