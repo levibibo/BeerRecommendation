@@ -59,8 +59,9 @@ namespace BeerRecommendation
 				int userId = User.CheckUserName(userName);
 				if (userId != 0)
 				{
+					var foundUser = User.Find(userId);
 					NancyCookie idNumber = new NancyCookie("userId", userId.ToString());
-					return View["index.cshtml"].WithCookie(idNumber);
+					return View["login_success.cshtml", foundUser].WithCookie(idNumber);
 				}
 				else
 				{
@@ -70,8 +71,10 @@ namespace BeerRecommendation
 			};
 			Get["/logout"] = _ =>
 			{
+				int userId = int.Parse(Request.Cookies["userId"]);
+				var foundUser = User.Find(userId);
 				NancyCookie idNumber = new NancyCookie("userId", "0");
-				return View["login.cshtml"].WithCookie(idNumber);
+				return View["logout_success.cshtml", foundUser].WithCookie(idNumber);
 			};
 
 			//Recommendation page
