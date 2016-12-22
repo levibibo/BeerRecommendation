@@ -78,28 +78,24 @@ namespace BeerRecommendation
 			Get["/recommend"] = _ =>
 			{
 				List<Beer> allBeers = Beer.GetAll();
-				List<User> allUsers = User.GetAll();
-				Dictionary<string, object> Model = new Dictionary<string, object>();
-				Model["beers"] = allBeers;
-				Model["users"] = allUsers;
-				return View["recommend_form.cshtml", Model];
+				return View["recommend_form.cshtml", allBeers];
 			};
-			Post["/recommend/results"] = _ =>
+			Get["/recommend/results"] = _ =>
 			{
 				List<Beer> recommendedBeers = new List<Beer>{};
 				if (!(Request.Cookies.ContainsKey("userId")) || (Request.Cookies["userId"] == "0"))
 				{
 					User guest = new User("Guest");
-					int beerId = int.Parse(Request.Form["beer-id"]);
-					int listSize = int.Parse(Request.Form["list-size"]);
+					int beerId = int.Parse(Request.Query["beer-id"]);
+					int listSize = int.Parse(Request.Query["list-size"]);
 					recommendedBeers = guest.GetRecommendations(beerId, listSize);
 				}
 				else
 				{
 					int userId = int.Parse(Request.Cookies["userId"]);
 					User foundUser = User.Find(userId);
-					int beerId = int.Parse(Request.Form["beer-id"]);
-					int listSize = int.Parse(Request.Form["list-size"]);
+					int beerId = int.Parse(Request.Query["beer-id"]);
+					int listSize = int.Parse(Request.Query["list-size"]);
 					recommendedBeers = foundUser.GetRecommendations(beerId, listSize);
 				}
 				return View["recommend_result.cshtml", recommendedBeers];
@@ -156,8 +152,15 @@ namespace BeerRecommendation
 
 				if (searchBy == "abv" || searchBy == "ibu")
 				{
-					double searchInput = Request.Form["search-input"];
-					foundBeers = Beer.Search(searchBy, searchInput);
+					try
+					{
+						double searchInput = Request.Form["search-input"];
+						foundBeers = Beer.Search(searchBy, searchInput);
+					}
+					catch
+					{
+						//do nothing, return empty list
+					}
 				}
 				else
 				{

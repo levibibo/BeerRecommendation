@@ -101,8 +101,8 @@ namespace BeerRecommendation.Objects
 
       //Act
       newUser.RateBeer(newBeer.GetId(), 5);
-      Dictionary<int, List<object>> ratedBeers = newUser.GetRated();
-      Beer testBeer = (Beer) ratedBeers[newBeer.GetId()][0];
+      List<Beer> ratedBeers = newUser.GetRated();
+      Beer testBeer = (Beer) ratedBeers[0];
 
       //Assert
       Assert.Equal(newBeer, testBeer);
