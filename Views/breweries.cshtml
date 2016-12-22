@@ -6,7 +6,9 @@
   @foreach (var brewery in Model)
   {
     <div class="row">
-      <p><a href="/breweries/@brewery.GetId()">@brewery.GetName()</a></p>
+			<div class="col-md-12">
+	      <p><a href="/breweries/@brewery.GetId()">@brewery.GetName()</a></p>
+			</div>
     </div>
   }
 </div>

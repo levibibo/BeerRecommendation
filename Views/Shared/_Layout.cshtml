@@ -12,11 +12,15 @@
         @if (Request.Cookies.ContainsKey("userId") && Request.Cookies["userId"] != "0")
         {
           <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-5">
             </div>
-            <div class="col-md-5 nav-link">
+            <div class="col-md-7 nav-link">
               <div class="row">
-                  <a href="/">Home</a>&nbsp;&nbsp;<a href="/users/profile">View&nbsp;Profile</a>&nbsp;&nbsp;<a href="/logout">Log&nbsp;Out</a>&nbsp;&nbsp;<a href="/database">Add&nbsp;to&nbsp;Our&nbsp;Database</a>
+                <a href="/beers/search">Search&nbsp;Beers</a>&nbsp;&nbsp;
+                <a href="/">Home</a>&nbsp;&nbsp;
+                <a href="/users/profile">View&nbsp;Profile</a>&nbsp;&nbsp;
+                <a href="/logout">Log&nbsp;Out</a>&nbsp;&nbsp;
+                <a href="/database">Add&nbsp;to&nbsp;Our&nbsp;Database</a>
               </div>
             </div>
           </div>
