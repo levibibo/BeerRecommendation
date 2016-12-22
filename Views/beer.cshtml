@@ -14,7 +14,6 @@
 		@Model.GetName()
 	</h3>
 	<div class="under-line"></div>
-	<!-- <h4>Brewery:</h4> -->
 	<div class="row">
 		<div class="col-md-6">
 			@if (abv == 0.0)
@@ -55,7 +54,7 @@
 							- Brewery:
 							@foreach (var brewery in beerBreweries)
 							{
-								<a href="/breweries/@brewery.GetId()">@brewery.GetName()</a>//Only handles one brewery.
+								<a href="/breweries/@brewery.GetId()">@brewery.GetName()</a>
 							}
 						</p>
 					</div>
@@ -63,7 +62,6 @@
 			</li>
 		}
 	</ul>
-
 	@if ((Request.Cookies.ContainsKey("userId")) && (int.Parse(Request.Cookies["userId"]) > 0))
 	{
 		<h4>Rate this beer:</h4>
@@ -78,8 +76,4 @@
 			<button class="btn btn-warning" type="submit">Rate</button>
 		</form>
 	}
-  <!-- <form action="/recommend/results" method="get">
-  	<input type="hidden" name="beer-id" value="@Model.GetId()">
-	<button class="btn btn-warning" type="submit">Get similar beers</button>
-  </form> -->
 </div>

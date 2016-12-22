@@ -45,7 +45,6 @@ namespace BeerRecommendation.Objects
 			return allBeers;
 		}
 
-
 		//Overload for different order-by parameters
 		public static List<Beer> GetAll(string orderBy)
 		{
@@ -110,6 +109,115 @@ namespace BeerRecommendation.Objects
 			return new Beer(name, abv, ibu, id);
 		}
 
+		public static List<Beer> Search(string searchBy, string searchInput)
+		{
+			List<Beer> foundBeers = new List<Beer> {};
+
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+
+			SqlCommand cmd = new SqlCommand();
+			cmd.Connection = conn;
+
+			string searchValue = "%" + searchInput + "%";
+
+			switch (searchBy.ToLower())
+			{
+				case "name":
+						cmd.CommandText = "SELECT * FROM beers WHERE name LIKE @searchValue";
+						break;
+				case "brewery":
+						cmd.CommandText = "SELECT beers.* FROM breweries JOIN beers_breweries ON (breweries.id = beers_breweries.brewery_id) JOIN beers ON (beers_breweries.beer_id = beers.id) WHERE breweries.name LIKE @searchValue";
+						break;
+				default:
+						break;
+			}
+			cmd.Parameters.AddWithValue("@searchValue", searchValue);
+
+			SqlDataReader rdr = cmd.ExecuteReader();
+
+			while (rdr.Read())
+			{
+				int foundId = rdr.GetInt32(0);
+				string foundName = rdr.GetString(1);
+				double foundAbv = (rdr.IsDBNull(2))? 0.0 : rdr.GetDouble(2);
+				double foundIbu = (rdr.IsDBNull(3))? 0.0 : rdr.GetDouble(3);
+
+				foundBeers.Add(new Beer(foundName, foundAbv, foundIbu, foundId));
+			}
+
+			if (rdr != null) rdr.Close();
+			if (conn != null) conn.Close();
+
+			return foundBeers;
+		}
+
+		public static List<Beer> Search(string searchBy, double searchInput, double searchRange = 0)
+		{
+			List<Beer> foundBeers = new List<Beer> {};
+
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+
+			SqlCommand cmd = new SqlCommand();
+			cmd.Connection = conn;
+
+			double searchRangeLowerBound = searchInput - searchRange;
+			double searchRangeUpperBound = searchInput + searchRange;
+
+			switch (searchBy.ToLower())
+			{
+				case "abv":
+					cmd.CommandText = "SELECT * FROM beers WHERE abv BETWEEN @LowerBound AND @UpperBound;";
+					break;
+				case "ibu":
+					cmd.CommandText = "SELECT * FROM beers WHERE ibu BETWEEN @LowerBound AND @UpperBound;";
+					break;
+				default:
+					break;
+			}
+
+			cmd.Parameters.AddWithValue("@LowerBound", searchRangeLowerBound);
+			cmd.Parameters.AddWithValue("@UpperBound", searchRangeUpperBound);
+
+			SqlDataReader rdr = cmd.ExecuteReader();
+
+			while (rdr.Read())
+			{
+				int foundId = rdr.GetInt32(0);
+				string foundName = rdr.GetString(1);
+				double foundAbv = (rdr.IsDBNull(2))? 0.0 : rdr.GetDouble(2);
+				double foundIbu = (rdr.IsDBNull(3))? 0.0 : rdr.GetDouble(3);
+
+				foundBeers.Add(new Beer(foundName, foundAbv, foundIbu, foundId));
+			}
+
+			if (rdr != null) rdr.Close();
+			if (conn != null) conn.Close();
+
+			return foundBeers;
+		}
+
+		public static void DeleteBeer(int id)
+		{
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+			SqlCommand cmd = new SqlCommand("DELETE FROM beers_breweries WHERE beer_id = @Id; DELETE FROM favorites WHERE beer_id = @Id; DELETE FROM beers WHERE id = @Id;", conn);
+			cmd.Parameters.AddWithValue("@Id", id);
+			cmd.ExecuteNonQuery();
+			if (conn != null) conn.Close();
+		}
+
+		public static void DeleteAll()
+		{
+			SqlConnection conn = DB.Connection();
+			conn.Open();
+			SqlCommand cmd = new SqlCommand("DELETE FROM beers; DELETE FROM favorites; DELETE FROM beers_breweries", conn);
+			cmd.ExecuteNonQuery();
+			if (conn != null) conn.Close();
+		}
+
+		//Other methods
 		public List<Beer> GetSimilar(int listSize = 5, double ibuModifierIncrement = 2.0, double abvModifierIncrement = 0.1)
 		{
 			List<Beer> chosenBeers = new List<Beer>{};
@@ -160,26 +268,6 @@ namespace BeerRecommendation.Objects
 			return chosenBeers;
 		}
 
-		public static void DeleteBeer(int id)
-		{
-			SqlConnection conn = DB.Connection();
-			conn.Open();
-			SqlCommand cmd = new SqlCommand("DELETE FROM beers_breweries WHERE beer_id = @Id; DELETE FROM favorites WHERE beer_id = @Id; DELETE FROM beers WHERE id = @Id;", conn);
-			cmd.Parameters.AddWithValue("@Id", id);
-			cmd.ExecuteNonQuery();
-			if (conn != null) conn.Close();
-		}
-
-		public static void DeleteAll()
-		{
-			SqlConnection conn = DB.Connection();
-			conn.Open();
-			SqlCommand cmd = new SqlCommand("DELETE FROM beers; DELETE FROM favorites; DELETE FROM beers_breweries", conn);
-			cmd.ExecuteNonQuery();
-			if (conn != null) conn.Close();
-		}
-
-		//Other methods
 		public void Save()
 		{
 			SqlConnection conn = DB.Connection();
@@ -273,95 +361,6 @@ namespace BeerRecommendation.Objects
 			if (rdr != null) rdr.Close();
 			if (conn != null) conn.Close();
 			return foundBreweries;
-		}
-
-		public static List<Beer> Search(string searchBy, string searchInput)
-		{
-			List<Beer> foundBeers = new List<Beer> {};
-
-			SqlConnection conn = DB.Connection();
-			conn.Open();
-
-			SqlCommand cmd = new SqlCommand();
-			cmd.Connection = conn;
-
-			string searchValue = "%" + searchInput + "%";
-
-			switch (searchBy.ToLower())
-			{
-				case "name":
-						cmd.CommandText = "SELECT * FROM beers WHERE name LIKE @searchValue";
-						break;
-				case "brewery":
-						cmd.CommandText = "SELECT beers.* FROM breweries JOIN beers_breweries ON (breweries.id = beers_breweries.brewery_id) JOIN beers ON (beers_breweries.beer_id = beers.id) WHERE breweries.name LIKE @searchValue";
-						break;
-				default:
-						break;
-			}
-			cmd.Parameters.AddWithValue("@searchValue", searchValue);
-
-			SqlDataReader rdr = cmd.ExecuteReader();
-
-			while (rdr.Read())
-			{
-				int foundId = rdr.GetInt32(0);
-				string foundName = rdr.GetString(1);
-				double foundAbv = (rdr.IsDBNull(2))? 0.0 : rdr.GetDouble(2);
-				double foundIbu = (rdr.IsDBNull(3))? 0.0 : rdr.GetDouble(3);
-
-				foundBeers.Add(new Beer(foundName, foundAbv, foundIbu, foundId));
-			}
-
-			if (rdr != null) rdr.Close();
-			if (conn != null) conn.Close();
-
-			return foundBeers;
-		}
-
-		public static List<Beer> Search(string searchBy, double searchInput, double searchRange = 0)
-		{
-			List<Beer> foundBeers = new List<Beer> {};
-
-			SqlConnection conn = DB.Connection();
-			conn.Open();
-
-			SqlCommand cmd = new SqlCommand();
-			cmd.Connection = conn;
-
-			double searchRangeLowerBound = searchInput - searchRange;
-			double searchRangeUpperBound = searchInput + searchRange;
-
-			switch (searchBy.ToLower())
-			{
-				case "abv":
-					cmd.CommandText = "SELECT * FROM beers WHERE abv BETWEEN @LowerBound AND @UpperBound;";
-					break;
-				case "ibu":
-					cmd.CommandText = "SELECT * FROM beers WHERE ibu BETWEEN @LowerBound AND @UpperBound;";
-					break;
-				default:
-					break;
-			}
-
-			cmd.Parameters.AddWithValue("@LowerBound", searchRangeLowerBound);
-			cmd.Parameters.AddWithValue("@UpperBound", searchRangeUpperBound);
-
-			SqlDataReader rdr = cmd.ExecuteReader();
-
-			while (rdr.Read())
-			{
-				int foundId = rdr.GetInt32(0);
-				string foundName = rdr.GetString(1);
-				double foundAbv = (rdr.IsDBNull(2))? 0.0 : rdr.GetDouble(2);
-				double foundIbu = (rdr.IsDBNull(3))? 0.0 : rdr.GetDouble(3);
-
-				foundBeers.Add(new Beer(foundName, foundAbv, foundIbu, foundId));
-			}
-
-			if (rdr != null) rdr.Close();
-			if (conn != null) conn.Close();
-
-			return foundBeers;
 		}
 
 		//Overrides

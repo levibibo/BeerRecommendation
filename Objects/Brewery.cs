@@ -17,47 +17,7 @@ namespace BeerRecommendation.Objects
       _location = newLocation;
     }
 
-    public List<Beer> GetBeers()
-    {
-      SqlConnection conn = DB.Connection();
-      conn.Open();
-
-      SqlCommand cmd = new SqlCommand("SELECT beers.* From breweries JOIN beers_breweries ON (breweries.id = beers_breweries.brewery_id) JOIN beers ON (beers_breweries.beer_id = beers.id) WHERE breweries.id = @BreweryId;", conn);
-
-      cmd.Parameters.AddWithValue("@BreweryId", this.GetId());
-
-      SqlDataReader rdr = cmd.ExecuteReader();
-
-      List<Beer> beers = new List<Beer>{};
-      while(rdr.Read())
-      {
-        int newId = rdr.GetInt32(0);
-        string newName = rdr.GetString(1);
-        double newAbv = (rdr.IsDBNull(2))? 0.0 : rdr.GetDouble(2);
-        double newIbu = (rdr.IsDBNull(3))? 0.0 : rdr.GetDouble(3);
-        Beer newBeer = new Beer(newName, newAbv, newIbu, newId);
-
-        beers.Add(newBeer);
-      }
-      if (rdr != null) rdr.Close();
-      if (conn != null) conn.Close();
-
-      return beers;
-    }
-
-    public void AddBeer(int beerId)
-    {
-      SqlConnection conn = DB.Connection();
-      conn.Open();
-
-      SqlCommand cmd = new SqlCommand("INSERT INTO beers_breweries (beer_id, brewery_id) VALUES (@BeerId, @BreweryId);", conn);
-      cmd.Parameters.AddWithValue("@BeerId", beerId);
-      cmd.Parameters.AddWithValue("@BreweryId", this.GetId());
-
-      cmd.ExecuteNonQuery();
-      if (conn != null) conn.Close();
-    }
-
+    //Static methods
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
@@ -77,28 +37,6 @@ namespace BeerRecommendation.Objects
       SqlCommand cmd = new SqlCommand("DELETE FROM beers_breweries WHERE brewery_id = @BreweryId; DELETE FROM breweries = @BreweryId;", conn);
       cmd.Parameters.AddWithValue("@BreweryId", breweryId);
       cmd.ExecuteNonQuery();
-
-      if (conn != null) conn.Close();
-    }
-
-    public void Save()
-    {
-      SqlConnection conn = DB.Connection();
-      conn.Open();
-
-      SqlCommand cmd = new SqlCommand("INSERT INTO breweries (name, location) OUTPUT INSERTED.id VALUES (@Name, @Location);", conn);
-
-      cmd.Parameters.AddWithValue("@Name", this.GetName());
-      cmd.Parameters.AddWithValue("@Location", this.GetLocation());
-
-      SqlDataReader rdr = cmd.ExecuteReader();
-
-      while(rdr.Read())
-      {
-        this._id = rdr.GetInt32(0);
-      }
-
-      if (rdr != null) conn.Close();
 
       if (conn != null) conn.Close();
     }
@@ -156,7 +94,72 @@ namespace BeerRecommendation.Objects
 
       return allBreweries;
     }
-////Overrides
+
+    //Other methods
+    public List<Beer> GetBeers()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT beers.* From breweries JOIN beers_breweries ON (breweries.id = beers_breweries.brewery_id) JOIN beers ON (beers_breweries.beer_id = beers.id) WHERE breweries.id = @BreweryId;", conn);
+
+      cmd.Parameters.AddWithValue("@BreweryId", this.GetId());
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      List<Beer> beers = new List<Beer>{};
+      while(rdr.Read())
+      {
+        int newId = rdr.GetInt32(0);
+        string newName = rdr.GetString(1);
+        double newAbv = (rdr.IsDBNull(2))? 0.0 : rdr.GetDouble(2);
+        double newIbu = (rdr.IsDBNull(3))? 0.0 : rdr.GetDouble(3);
+        Beer newBeer = new Beer(newName, newAbv, newIbu, newId);
+
+        beers.Add(newBeer);
+      }
+      if (rdr != null) rdr.Close();
+      if (conn != null) conn.Close();
+
+      return beers;
+    }
+
+    public void AddBeer(int beerId)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("INSERT INTO beers_breweries (beer_id, brewery_id) VALUES (@BeerId, @BreweryId);", conn);
+      cmd.Parameters.AddWithValue("@BeerId", beerId);
+      cmd.Parameters.AddWithValue("@BreweryId", this.GetId());
+
+      cmd.ExecuteNonQuery();
+      if (conn != null) conn.Close();
+    }
+
+    public void Save()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("INSERT INTO breweries (name, location) OUTPUT INSERTED.id VALUES (@Name, @Location);", conn);
+
+      cmd.Parameters.AddWithValue("@Name", this.GetName());
+      cmd.Parameters.AddWithValue("@Location", this.GetLocation());
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this._id = rdr.GetInt32(0);
+      }
+
+      if (rdr != null) conn.Close();
+
+      if (conn != null) conn.Close();
+    }
+
+    //Overrides
     public override bool Equals(System.Object otherObject)
     {
       if (!(otherObject is Brewery))
@@ -178,7 +181,7 @@ namespace BeerRecommendation.Objects
       return this.GetName().GetHashCode();
     }
 
-////Getters and Setters
+    //Getters and Setters
     public void SetId(int newId)
     {
       _id = newId;
