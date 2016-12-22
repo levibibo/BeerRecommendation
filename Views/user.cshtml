@@ -4,13 +4,18 @@
 }
 <div class="form">
 	<h2>@Model.GetName()</h2>
-	@if (ratedBeers.Keys.Count > 0)
+	@if (ratedBeers.Count > 0)
 	{
 		<h3>Rated beers</h3>
 		<ul>
-		@foreach (var beerId in ratedBeers.Keys)
+		@foreach (var beer in ratedBeers)
 		{
-			<li><h4><a href="/beers/@ratedBeers[beerId][0].GetId()">@ratedBeers[beerId][0].GetName()</a> - Rating: @ratedBeers[beerId][1] out of 5</h4></li>
+			<li><h4><a href="/beers/@beer.GetId()">@beer.GetName()</a> - Rating: @beer.GetUserRating(@Model.GetId()) out of 5</h4></li>
+			<form action="/recommend/results" method="get">
+				<input type="hidden" name="beer-id" value="@beer.GetId()">
+				<input type="hidden" name="list-size" value="5">
+				<button class="btn btn-warning" type="submit">Get similar beers</button>
+			</form>
 		}
 		</ul>
 	}
